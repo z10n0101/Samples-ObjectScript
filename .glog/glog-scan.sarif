@@ -12,6 +12,28 @@
           "informationUri": "https://www.glog.ai",
           "rules": [
             {
+              "id": "bc66e203-50b0-3983-b0b7-cb7eebf9bd13",
+              "name": "Unanchored Regex in Control Flow Vulnerability",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Unanchored Regex in Control Flow Vulnerability\" in ObjectScript programming language is a type of vulnerability that occurs when a regular expression (regex) used in the control flow of a program is not properly anchored. This can lead to unexpected behavior and potential security risks. In the provided code example, the regex is used to match a phone number format, but it is not anchored at the start and end of the string. This means that it can match any part of the string, allowing for potential injection attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always anchor your regular expressions at the start and end of the string. This ensures that the regex will only match the entire string, and not just a part of it. Additionally, it is important to always validate and sanitize user input to prevent injection attacks.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code:\n\n```objectscript\nif $match(phone, \"^(\\d{3}-)?\\d{3}-\\d{4}$\") {\n```\n\nIn this version, the `^` character is used to anchor the regex at the start of the string, and the `$` character is used to anchor it at the end of the string.\n\n## Library Dependencies\n\nThe provided code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Regular Expression Denial of Service - ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)\n- [CWE-625: Permissive Regular Expression](https://cwe.mitre.org/data/definitions/625.html)\n\nPlease note that these links are valid and active at the time of writing this report."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-625",
+                    "url": "https://cwe.mitre.org/data/definitions/625.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-625"
+                ]
+              }
+            },
+            {
               "id": "4d0c456f-a42e-311e-b69e-14311e702bb7",
               "name": "\"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\"",
               "helpUri": "https://www.glog.ai/",
@@ -78,51 +100,29 @@
               }
             },
             {
-              "id": "bc66e203-50b0-3983-b0b7-cb7eebf9bd13",
-              "name": "Unanchored Regex in Control Flow Vulnerability",
+              "id": "f5a0b927-ccf2-399c-9090-31dd2cd52298",
+              "name": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe \"Unanchored Regex in Control Flow Vulnerability\" in ObjectScript programming language is a type of vulnerability that occurs when a regular expression (regex) used in the control flow of a program is not properly anchored. This can lead to unexpected behavior and potential security risks. In the provided code example, the regex is used to match a phone number format, but it is not anchored at the start and end of the string. This means that it can match any part of the string, allowing for potential injection attacks.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to always anchor your regular expressions at the start and end of the string. This ensures that the regex will only match the entire string, and not just a part of it. Additionally, it is important to always validate and sanitize user input to prevent injection attacks.\n\n## Source Code Fix Recommendation\n\nHere is a fixed version of the code:\n\n```objectscript\nif $match(phone, \"^(\\d{3}-)?\\d{3}-\\d{4}$\") {\n```\n\nIn this version, the `^` character is used to anchor the regex at the start of the string, and the `$` character is used to anchor it at the end of the string.\n\n## Library Dependencies\n\nThe provided code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Regular Expression Denial of Service - ReDoS](https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS)\n- [CWE-625: Permissive Regular Expression](https://cwe.mitre.org/data/definitions/625.html)\n\nPlease note that these links are valid and active at the time of writing this report."
+                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through all the data in the global variable, potentially exposing sensitive information.\n\nIn the provided code snippet, the `$order` function is used to iterate over the `^PersonI(\"Name\", ln)` global variable without any rate limiting or authorization checks. This means that an attacker could potentially iterate through all the names in the `^PersonI(\"Name\", ln)` global variable, exposing all the names stored in the variable.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement rate limiting: This will limit the number of requests a user can make in a certain time period, making it harder for an attacker to enumerate through all the data.\n\n2. Implement authorization checks: This will ensure that only authorized users can access the data.\n\n3. Limit the max-results: This will limit the number of results returned by the `$order` function, making it harder for an attacker to enumerate through all the data.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\n// Define max results and rate limit\nset maxResults = 100\nset rateLimit = 10\n\nfor {\n    // Check if user is authorized\n    if '$$isAuthorized^Security() quit\n\n    // Check rate limit\n    if '$$checkRateLimit^Security(rateLimit) quit\n\n    set ln = $order(^PersonI(\"Name\", ln))\n\n    // Limit max results\n    if $increment(counter) > maxResults quit\n}\n```\n\nIn this fix, we first define the `maxResults` and `rateLimit`. Then, before iterating over the global variable, we check if the user is authorized and if the rate limit has been reached. Finally, we limit the max results by quitting the loop if the counter exceeds the `maxResults`.\n\n## Library Dependencies\n\nThe provided code snippet does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Insecure Direct Object References](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-625",
-                    "url": "https://cwe.mitre.org/data/definitions/625.html"
+                    "id": "CWE-209",
+                    "url": "https://cwe.mitre.org/data/definitions/209.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-625"
+                  "CWE-209"
                 ]
               }
             },
             {
               "id": "153fda13-fe08-3a8f-ac50-0f40b22d2e61",
-              "name": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe \"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\" vulnerability in ObjectScript refers to a situation where an attacker can potentially enumerate through all the data in a global variable. This can lead to unauthorized access to sensitive data, as well as potential Denial of Service (DoS) attacks if the attacker is able to exhaust system resources by forcing the application to retrieve large amounts of data.\n\nIn the provided code snippet, the loop iterates over the `^PersonI(\"DOB\", intdob, id)` global variable without any rate limiting or maximum results limit. This means that an attacker could potentially retrieve all the data in this global variable.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement rate limiting: This will prevent an attacker from making too many requests in a short period of time, which can help prevent DoS attacks.\n\n2. Set a maximum results limit: This will prevent an attacker from retrieving all the data in a global variable in a single request.\n\n3. Implement authorization checks: This will ensure that only authorized users can access the data in the global variable.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\nset maxResults = 100\nset rateLimit = 10\nset count = 0\nfor count = 1:1 {\n    if (count > maxResults) {\n        quit\n    }\n    if ($data(^PersonI(\"DOB\", intdob, id))#rateLimit = 0) {\n        quit\n    }\n    set id = $order(^PersonI(\"DOB\", intdob, id))\n}\n```\n\nIn this fixed code, the loop will exit if the count exceeds the maximum results limit or if the rate limit is reached.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to require any external library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that these links are subject to change and may not be accessible in the future."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-400",
-                    "url": "https://cwe.mitre.org/data/definitions/400.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-400"
-                ]
-              }
-            },
-            {
-              "id": "c961ecdb-2b74-351e-9f92-ea8c23648265",
               "name": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
@@ -162,6 +162,72 @@
                 "kind": "FAIL",
                 "tags": [
                   "CWE-625"
+                ]
+              }
+            },
+            {
+              "id": "c961ecdb-2b74-351e-9f92-ea8c23648265",
+              "name": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\" vulnerability in ObjectScript refers to a situation where an attacker can potentially enumerate through all the data in a global variable. This can lead to unauthorized access to sensitive data, as well as potential Denial of Service (DoS) attacks if the attacker is able to exhaust system resources by forcing the application to retrieve large amounts of data.\n\nIn the provided code snippet, the loop iterates over the `^PersonI(\"DOB\", intdob, id)` global variable without any rate limiting or maximum results limit. This means that an attacker could potentially retrieve all the data in this global variable.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement rate limiting: This will prevent an attacker from making too many requests in a short period of time, which can help prevent DoS attacks.\n\n2. Set a maximum results limit: This will prevent an attacker from retrieving all the data in a global variable in a single request.\n\n3. Implement authorization checks: This will ensure that only authorized users can access the data in the global variable.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\nset maxResults = 100\nset rateLimit = 10\nset count = 0\nfor count = 1:1 {\n    if (count > maxResults) {\n        quit\n    }\n    if ($data(^PersonI(\"DOB\", intdob, id))#rateLimit = 0) {\n        quit\n    }\n    set id = $order(^PersonI(\"DOB\", intdob, id))\n}\n```\n\nIn this fixed code, the loop will exit if the count exceeds the maximum results limit or if the rate limit is reached.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to require any external library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that these links are subject to change and may not be accessible in the future."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-400",
+                    "url": "https://cwe.mitre.org/data/definitions/400.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-400"
+                ]
+              }
+            },
+            {
+              "id": "2e26f975-c218-33b2-b535-ea3d524dd918",
+              "name": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through the global variables and potentially access sensitive information.\n\nThe specific vulnerability sink in the provided code is the loop over `^PersonI(\"Name\", ln, fn)`. If the `ln` and `fn` variables are user-controlled, an attacker could potentially manipulate them to enumerate through the global variables.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement proper authorization checks: Ensure that the user has the necessary permissions to access the data they are requesting.\n\n2. Implement rate limiting: This can prevent an attacker from quickly enumerating through the global variables.\n\n3. Validate user input: Ensure that the `ln` and `fn` variables are valid before using them in the `$order` function.\n\n## Source Code Fix Recommendation\n\nHere is a simple fix for the provided code:\n\n```objectscript\nfor {\n    // Validate user input\n    if ($data(^PersonI(\"Name\", ln, fn)) '= 1) {\n        quit\n    }\n\n    // Check user permissions\n    if ('$security.checkPermission(\"read\", ^PersonI(\"Name\", ln, fn))) {\n        quit\n    }\n\n    set fn = $order(^PersonI(\"Name\", ln, fn))\n}\n```\n\nIn this fix, we first check if the `ln` and `fn` variables are valid using the `$data` function. Then, we check if the user has the necessary permissions to access the data using a hypothetical `checkPermission` function. If either check fails, we quit the loop.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links provided are valid and active for anonymous users at the time of writing."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-209",
+                    "url": "https://cwe.mitre.org/data/definitions/209.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-209"
+                ]
+              }
+            },
+            {
+              "id": "809b9ffa-869c-3d48-aee7-83677d3556a8",
+              "name": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through the global variables and potentially access sensitive information.\n\nThe specific sink in the provided code is the loop over the `^PersonI(\"Name\", ln, fn, id)` global variable using the `$order` function. If the `id` is not properly validated or if there are no proper rate limiting and authorization checks, an attacker can potentially enumerate through all the `id`s and access sensitive information.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement proper authorization checks: Before accessing the `id`, make sure that the user has the necessary permissions to access it.\n\n2. Implement rate limiting: To prevent an attacker from enumerating through all the `id`s, you should limit the number of requests a user can make in a certain period of time.\n\n3. Validate the `id`: Make sure that the `id` is valid before accessing it. This can prevent an attacker from accessing an `id` that they should not have access to.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```objectscript\nfor {\n    set id = $order(^PersonI(\"Name\", ln, fn, id))\n    if (isValid(id) && isAuthorized(id)) {\n        // process the id\n    } else {\n        // handle the error\n    }\n}\n```\n\nIn this fix, `isValid(id)` is a function that checks if the `id` is valid and `isAuthorized(id)` is a function that checks if the user is authorized to access the `id`.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Top 10 2017 Category A5 - Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links are valid and active for anonymous users at the time of writing this report."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-209",
+                    "url": "https://cwe.mitre.org/data/definitions/209.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-209"
                 ]
               }
             },
@@ -210,28 +276,6 @@
               }
             },
             {
-              "id": "2e26f975-c218-33b2-b535-ea3d524dd918",
-              "name": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through the global variables and potentially access sensitive information.\n\nThe specific vulnerability sink in the provided code is the loop over `^PersonI(\"Name\", ln, fn)`. If the `ln` and `fn` variables are user-controlled, an attacker could potentially manipulate them to enumerate through the global variables.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement proper authorization checks: Ensure that the user has the necessary permissions to access the data they are requesting.\n\n2. Implement rate limiting: This can prevent an attacker from quickly enumerating through the global variables.\n\n3. Validate user input: Ensure that the `ln` and `fn` variables are valid before using them in the `$order` function.\n\n## Source Code Fix Recommendation\n\nHere is a simple fix for the provided code:\n\n```objectscript\nfor {\n    // Validate user input\n    if ($data(^PersonI(\"Name\", ln, fn)) '= 1) {\n        quit\n    }\n\n    // Check user permissions\n    if ('$security.checkPermission(\"read\", ^PersonI(\"Name\", ln, fn))) {\n        quit\n    }\n\n    set fn = $order(^PersonI(\"Name\", ln, fn))\n}\n```\n\nIn this fix, we first check if the `ln` and `fn` variables are valid using the `$data` function. Then, we check if the user has the necessary permissions to access the data using a hypothetical `checkPermission` function. If either check fails, we quit the loop.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links provided are valid and active for anonymous users at the time of writing."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-209",
-                    "url": "https://cwe.mitre.org/data/definitions/209.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-209"
-                ]
-              }
-            },
-            {
               "id": "f21f4170-a2c0-3ec6-9a64-058ba8f9a1f3",
               "name": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
               "helpUri": "https://www.glog.ai/",
@@ -254,51 +298,7 @@
               }
             },
             {
-              "id": "f5a0b927-ccf2-399c-9090-31dd2cd52298",
-              "name": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through all the data in the global variable, potentially exposing sensitive information.\n\nIn the provided code snippet, the `$order` function is used to iterate over the `^PersonI(\"Name\", ln)` global variable without any rate limiting or authorization checks. This means that an attacker could potentially iterate through all the names in the `^PersonI(\"Name\", ln)` global variable, exposing all the names stored in the variable.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement rate limiting: This will limit the number of requests a user can make in a certain time period, making it harder for an attacker to enumerate through all the data.\n\n2. Implement authorization checks: This will ensure that only authorized users can access the data.\n\n3. Limit the max-results: This will limit the number of results returned by the `$order` function, making it harder for an attacker to enumerate through all the data.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\n// Define max results and rate limit\nset maxResults = 100\nset rateLimit = 10\n\nfor {\n    // Check if user is authorized\n    if '$$isAuthorized^Security() quit\n\n    // Check rate limit\n    if '$$checkRateLimit^Security(rateLimit) quit\n\n    set ln = $order(^PersonI(\"Name\", ln))\n\n    // Limit max results\n    if $increment(counter) > maxResults quit\n}\n```\n\nIn this fix, we first define the `maxResults` and `rateLimit`. Then, before iterating over the global variable, we check if the user is authorized and if the rate limit has been reached. Finally, we limit the max results by quitting the loop if the counter exceeds the `maxResults`.\n\n## Library Dependencies\n\nThe provided code snippet does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Insecure Direct Object References](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-209",
-                    "url": "https://cwe.mitre.org/data/definitions/209.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-209"
-                ]
-              }
-            },
-            {
-              "id": "c3a2d8f1-4dbb-328d-9f52-1d71a5308480",
-              "name": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through all the data in the global variable, potentially exposing sensitive information.\n\nIn the provided code snippet, the `$order` function is used to iterate over the `^PersonI(\"Name\", ln)` global variable without any rate limiting or authorization checks. This means that an attacker could potentially iterate through all the names in the `^PersonI(\"Name\", ln)` global variable, exposing all the names stored in the variable.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement rate limiting: This will limit the number of requests a user can make in a certain time period, making it harder for an attacker to enumerate through all the data.\n\n2. Implement authorization checks: This will ensure that only authorized users can access the data.\n\n3. Limit the max-results: This will limit the number of results returned by the `$order` function, making it harder for an attacker to enumerate through all the data.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\n// Define max results and rate limit\nset maxResults = 100\nset rateLimit = 10\n\nfor {\n    // Check if user is authorized\n    if '$$isAuthorized^Security() quit\n\n    // Check rate limit\n    if '$$checkRateLimit^Security(rateLimit) quit\n\n    set ln = $order(^PersonI(\"Name\", ln))\n\n    // Limit max results\n    if $increment(counter) > maxResults quit\n}\n```\n\nIn this fix, we first define the `maxResults` and `rateLimit`. Then, before iterating over the global variable, we check if the user is authorized and if the rate limit has been reached. Finally, we limit the max results by quitting the loop if the counter exceeds the `maxResults`.\n\n## Library Dependencies\n\nThe provided code snippet does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Insecure Direct Object References](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-209",
-                    "url": "https://cwe.mitre.org/data/definitions/209.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-209"
-                ]
-              }
-            },
-            {
-              "id": "809b9ffa-869c-3d48-aee7-83677d3556a8",
+              "id": "b7b710e0-a579-3f23-8d02-8ee6cd1467a5",
               "name": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
@@ -364,46 +364,24 @@
               }
             },
             {
-              "id": "b7b710e0-a579-3f23-8d02-8ee6cd1467a5",
-              "name": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn ObjectScript, the `$order` function is used to iterate over global variables. However, if not properly implemented, it can lead to a potential enumeration vulnerability. This vulnerability can allow an attacker to enumerate through the global variables and potentially access sensitive information.\n\nThe specific sink in the provided code is the loop over the `^PersonI(\"Name\", ln, fn, id)` global variable using the `$order` function. If the `id` is not properly validated or if there are no proper rate limiting and authorization checks, an attacker can potentially enumerate through all the `id`s and access sensitive information.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should:\n\n1. Implement proper authorization checks: Before accessing the `id`, make sure that the user has the necessary permissions to access it.\n\n2. Implement rate limiting: To prevent an attacker from enumerating through all the `id`s, you should limit the number of requests a user can make in a certain period of time.\n\n3. Validate the `id`: Make sure that the `id` is valid before accessing it. This can prevent an attacker from accessing an `id` that they should not have access to.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```objectscript\nfor {\n    set id = $order(^PersonI(\"Name\", ln, fn, id))\n    if (isValid(id) && isAuthorized(id)) {\n        // process the id\n    } else {\n        // handle the error\n    }\n}\n```\n\nIn this fix, `isValid(id)` is a function that checks if the `id` is valid and `isAuthorized(id)` is a function that checks if the user is authorized to access the `id`.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Top 10 2017 Category A5 - Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-209: Information Exposure Through an Error Message](https://cwe.mitre.org/data/definitions/209.html)\n\nPlease note that the links are valid and active for anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-209",
-                    "url": "https://cwe.mitre.org/data/definitions/209.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-209"
-                ]
-              }
-            },
-            {
-              "id": "80e5bcc0-bd1f-325f-881b-f661c4d44193",
+              "id": "1c63cc4b-0cc5-3298-8eb0-523a47135950",
               "name": "\"Authorization and Consistency Verification for Global Node Deletion\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" is a vulnerability that can occur in ObjectScript programming language when an application does not properly enforce permissions for deleting a global node. This can lead to unauthorized deletion of data, which can have serious implications for the integrity and availability of the application's data.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"Phone\", phone)` global array. If the application does not properly verify the user's permissions before executing this command, an attacker could potentially delete data they are not authorized to delete.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should implement proper authorization checks before allowing a user to delete a global node. This could involve checking the user's role or permissions to ensure they are authorized to perform the deletion.\n\nAdditionally, the application should implement consistency checks to ensure that the deletion of a global node does not violate the integrity of the application's data. This could involve checking that the node is not referenced by other parts of the application before it is deleted.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you might implement these checks in ObjectScript:\n\n```objectscript\nif $get(^UserRoles($username),\"\")[\"Admin\" {\n    kill ^PersonI(\"Phone\", phone)\n} else {\n    write \"Error: You do not have permission to delete this data.\"\n}\n```\n\nIn this example, the `$get` function is used to retrieve the roles for the current user. If the user has the \"Admin\" role, they are allowed to delete the global node. Otherwise, an error message is displayed.\n\n## Library Dependencies\n\nThe provided code example does not appear to require any specific library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that these links are subject to change and may not always be accessible. Always ensure that you are accessing resources from trusted sources."
+                "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" vulnerability in ObjectScript refers to a situation where an application does not properly enforce access controls and data integrity checks before deleting a global node. This can lead to unauthorized data deletion or corruption.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"DOB\", intdob, id)` global array. If the application does not properly verify the user's authorization and the consistency of the data before executing this command, it could lead to unauthorized data deletion or corruption.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should:\n\n1. Implement proper access controls to ensure that only authorized users can delete global nodes.\n2. Perform data integrity checks before deleting a global node to ensure that the data is consistent and valid.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you can implement these mitigations in ObjectScript:\n\n```objectscript\nif $get(^PersonI(\"DOB\", intdob, id)) {\n    if $roles[\"%Developer\"] {\n        kill ^PersonI(\"DOB\", intdob, id)\n    } else {\n        write \"Error: Unauthorized action.\",!\n    }\n} else {\n    write \"Error: Invalid data.\",!\n}\n```\n\nIn this example, the `$get` function is used to check if the global node exists before trying to delete it. The `$roles` function is used to check if the user has the `%Developer` role before allowing them to delete the global node.\n\n## Library Dependencies\n\nThe provided code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10-2017 A5-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-639: Authorization Bypass Through User-Controlled Key](https://cwe.mitre.org/data/definitions/639.html)\n\nPlease note that these links are subject to change and may not be accessible to all users."
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-285",
-                    "url": "https://cwe.mitre.org/data/definitions/285.html"
+                    "id": "CWE-639",
+                    "url": "https://cwe.mitre.org/data/definitions/639.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-285"
+                  "CWE-639"
                 ]
               }
             },
@@ -430,6 +408,28 @@
               }
             },
             {
+              "id": "80e5bcc0-bd1f-325f-881b-f661c4d44193",
+              "name": "\"Authorization and Consistency Verification for Global Node Deletion\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" is a vulnerability that can occur in ObjectScript programming language when an application does not properly enforce permissions for deleting a global node. This can lead to unauthorized deletion of data, which can have serious implications for the integrity and availability of the application's data.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"Phone\", phone)` global array. If the application does not properly verify the user's permissions before executing this command, an attacker could potentially delete data they are not authorized to delete.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should implement proper authorization checks before allowing a user to delete a global node. This could involve checking the user's role or permissions to ensure they are authorized to perform the deletion.\n\nAdditionally, the application should implement consistency checks to ensure that the deletion of a global node does not violate the integrity of the application's data. This could involve checking that the node is not referenced by other parts of the application before it is deleted.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you might implement these checks in ObjectScript:\n\n```objectscript\nif $get(^UserRoles($username),\"\")[\"Admin\" {\n    kill ^PersonI(\"Phone\", phone)\n} else {\n    write \"Error: You do not have permission to delete this data.\"\n}\n```\n\nIn this example, the `$get` function is used to retrieve the roles for the current user. If the user has the \"Admin\" role, they are allowed to delete the global node. Otherwise, an error message is displayed.\n\n## Library Dependencies\n\nThe provided code example does not appear to require any specific library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Authorization Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Authorization_Cheat_Sheet.html)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that these links are subject to change and may not always be accessible. Always ensure that you are accessing resources from trusted sources."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-285",
+                    "url": "https://cwe.mitre.org/data/definitions/285.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-285"
+                ]
+              }
+            },
+            {
               "id": "5a8eaf42-0bfb-34db-9b94-e596fca1725d",
               "name": "\"Authorization and Consistency Verification for Global Node Deletion\"",
               "helpUri": "https://www.glog.ai/",
@@ -452,12 +452,12 @@
               }
             },
             {
-              "id": "1c63cc4b-0cc5-3298-8eb0-523a47135950",
+              "id": "8ce05a7d-fb70-3819-9558-f376f862e78e",
               "name": "\"Authorization and Consistency Verification for Global Node Deletion\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" vulnerability in ObjectScript refers to a situation where an application does not properly enforce access controls and data integrity checks before deleting a global node. This can lead to unauthorized data deletion or corruption.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"DOB\", intdob, id)` global array. If the application does not properly verify the user's authorization and the consistency of the data before executing this command, it could lead to unauthorized data deletion or corruption.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should:\n\n1. Implement proper access controls to ensure that only authorized users can delete global nodes.\n2. Perform data integrity checks before deleting a global node to ensure that the data is consistent and valid.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you can implement these mitigations in ObjectScript:\n\n```objectscript\nif $get(^PersonI(\"DOB\", intdob, id)) {\n    if $roles[\"%Developer\"] {\n        kill ^PersonI(\"DOB\", intdob, id)\n    } else {\n        write \"Error: Unauthorized action.\",!\n    }\n} else {\n    write \"Error: Invalid data.\",!\n}\n```\n\nIn this example, the `$get` function is used to check if the global node exists before trying to delete it. The `$roles` function is used to check if the user has the `%Developer` role before allowing them to delete the global node.\n\n## Library Dependencies\n\nThe provided code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10-2017 A5-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-639: Authorization Bypass Through User-Controlled Key](https://cwe.mitre.org/data/definitions/639.html)\n\nPlease note that these links are subject to change and may not be accessible to all users."
+                "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" vulnerability in ObjectScript programming language refers to a situation where an application does not properly enforce access controls and data consistency checks before deleting a global node. This can lead to unauthorized deletion of data, data inconsistency, and potential data loss.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"Name\", currentlast, currentfirst, id)` global array. If the application does not properly verify the user's authorization and the consistency of the data before executing this command, it could lead to the aforementioned issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should:\n\n1. Implement proper access controls to ensure that only authorized users can delete global nodes.\n2. Perform data consistency checks before deleting a global node to ensure that the deletion will not result in data inconsistency or loss.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you can implement these mitigations in ObjectScript:\n\n```objectscript\nif $get(^PersonI(\"Access\", currentlast, currentfirst, id)) = \"admin\" {\n    if $data(^PersonI(\"Name\", currentlast, currentfirst, id)) {\n        kill ^PersonI(\"Name\", currentlast, currentfirst, id)\n    } else {\n        write \"Error: Node does not exist.\",!\n    }\n} else {\n    write \"Error: Unauthorized user.\",!\n}\n```\n\nIn this example, the application first checks if the user has admin access before deleting the node. It then checks if the node exists before deleting it to prevent data inconsistency.\n\n## Library Dependencies\n\nThe provided code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Access Control Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html)\n- [CWE-639: Authorization Bypass Through User-Controlled Key](https://cwe.mitre.org/data/definitions/639.html)\n\nPlease note that these links are subject to change and may not be accessible at all times."
               },
               "properties": {
                 "cwe": [
@@ -480,28 +480,6 @@
               "help": {
                 "text": "",
                 "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" vulnerability in ObjectScript refers to a situation where an application does not properly enforce access controls or data consistency checks before deleting a global node. This can lead to unauthorized data deletion or corruption.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"DOB\", currentintdob, id)` global array. If the application does not properly verify the user's authorization and the consistency of the data before executing this command, it could lead to unauthorized data deletion or corruption.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should:\n\n1. Implement proper access controls to ensure that only authorized users can delete global nodes.\n2. Perform data consistency checks before deleting global nodes to prevent data corruption.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you can implement authorization and consistency checks before deleting a global node:\n\n```objectscript\nif $get(^PersonI(\"DOB\", currentintdob, id)) {\n    if $roles[\"Admin\"] {\n        kill ^PersonI(\"DOB\", currentintdob, id)\n    } else {\n        write \"Error: Unauthorized action.\",!\n    }\n} else {\n    write \"Error: Data inconsistency detected.\",!\n}\n```\n\nIn this example, the `$get` function is used to check if the global node exists before trying to delete it. The `$roles` array is used to check if the current user has the \"Admin\" role before allowing them to delete the global node.\n\n## Library Dependencies\n\nThe provided code example does not require any external library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10-2017 A5-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-639: Authorization Bypass Through User-Controlled Key](https://cwe.mitre.org/data/definitions/639.html)\n\nPlease note that the provided links are subject to change and may not be accessible in the future."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-639",
-                    "url": "https://cwe.mitre.org/data/definitions/639.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-639"
-                ]
-              }
-            },
-            {
-              "id": "8ce05a7d-fb70-3819-9558-f376f862e78e",
-              "name": "\"Authorization and Consistency Verification for Global Node Deletion\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\n\"Authorization and Consistency Verification for Global Node Deletion\" vulnerability in ObjectScript programming language refers to a situation where an application does not properly enforce access controls and data consistency checks before deleting a global node. This can lead to unauthorized deletion of data, data inconsistency, and potential data loss.\n\nIn the provided code example, the `kill` command is used to delete a global node in the `^PersonI(\"Name\", currentlast, currentfirst, id)` global array. If the application does not properly verify the user's authorization and the consistency of the data before executing this command, it could lead to the aforementioned issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, the application should:\n\n1. Implement proper access controls to ensure that only authorized users can delete global nodes.\n2. Perform data consistency checks before deleting a global node to ensure that the deletion will not result in data inconsistency or loss.\n\n## Source Code Fix Recommendation\n\nHere is a simple example of how you can implement these mitigations in ObjectScript:\n\n```objectscript\nif $get(^PersonI(\"Access\", currentlast, currentfirst, id)) = \"admin\" {\n    if $data(^PersonI(\"Name\", currentlast, currentfirst, id)) {\n        kill ^PersonI(\"Name\", currentlast, currentfirst, id)\n    } else {\n        write \"Error: Node does not exist.\",!\n    }\n} else {\n    write \"Error: Unauthorized user.\",!\n}\n```\n\nIn this example, the application first checks if the user has admin access before deleting the node. It then checks if the node exists before deleting it to prevent data inconsistency.\n\n## Library Dependencies\n\nThe provided code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Access Control Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html)\n- [CWE-639: Authorization Bypass Through User-Controlled Key](https://cwe.mitre.org/data/definitions/639.html)\n\nPlease note that these links are subject to change and may not be accessible at all times."
               },
               "properties": {
                 "cwe": [
@@ -669,6 +647,41 @@
           "properties": {}
         },
         {
+          "ruleId": "f5a0b927-ccf2-399c-9090-31dd2cd52298",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/Lookup2.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 122,
+                  "startColumn": 3,
+                  "endLine": 123,
+                  "endColumn": 30,
+                  "snippet": {
+                    "text": "  for {\n    set ln = $order(^PersonI(\"Name\", ln))"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "06da1ab1d78a04b0938b08d90d5ffbb7ecdbf53741184801579a55a27307fba8",
+            "glog-pfp-ruleFileCode/v1": "89413d1c12b709c64bf39bca2d4d4a052556ac660a54b1d7a3bb9a2689922a77"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "89413d1c12b709c64bf39bca2d4d4a052556ac660a54b1d7a3bb9a2689922a77"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "153fda13-fe08-3a8f-ac50-0f40b22d2e61",
           "kind": "fail",
           "level": "warning",
@@ -700,6 +713,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "5d05bc5db7d56d3b3d086e995edaaeeba3957afcf4a92ce90e1d2c1e09e2b49c"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "320750b7-a2c9-3c04-947a-3b51c5544d43",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unanchored Regex in Control Flow Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/Lookup2.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 26,
+                  "startColumn": 1,
+                  "endLine": 26,
+                  "endColumn": 48,
+                  "snippet": {
+                    "text": "  elseif $match(lookup, \"\\d{3}-(\\d{3}-\\d{4})?\") {"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "875987193c5e9afc3c81740674d566ec32177358ac0df2420b7fd3b0a2c5db30",
+            "glog-pfp-ruleFileCode/v1": "99e75fa1f8897b15bdf2500d458096c75a1f1718c6159dfbc6955ad5192a252d"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "99e75fa1f8897b15bdf2500d458096c75a1f1718c6159dfbc6955ad5192a252d"
           },
           "properties": {}
         },
@@ -739,11 +787,11 @@
           "properties": {}
         },
         {
-          "ruleId": "320750b7-a2c9-3c04-947a-3b51c5544d43",
+          "ruleId": "2e26f975-c218-33b2-b535-ea3d524dd918",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "Unanchored Regex in Control Flow Vulnerability"
+            "text": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\""
           },
           "locations": [
             {
@@ -753,23 +801,58 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 26,
-                  "startColumn": 1,
-                  "endLine": 26,
-                  "endColumn": 48,
+                  "startLine": 130,
+                  "startColumn": 5,
+                  "endLine": 131,
+                  "endColumn": 32,
                   "snippet": {
-                    "text": "  elseif $match(lookup, \"\\d{3}-(\\d{3}-\\d{4})?\") {"
+                    "text": "    for {\n      set fn = $order(^PersonI(\"Name\", ln, fn))"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "875987193c5e9afc3c81740674d566ec32177358ac0df2420b7fd3b0a2c5db30",
-            "glog-pfp-ruleFileCode/v1": "99e75fa1f8897b15bdf2500d458096c75a1f1718c6159dfbc6955ad5192a252d"
+            "glog-pfp-ruleFileLineCode/v1": "1987d19d334a3b35a7de2018bd27cf3861022855058164633a6a8d9cdf59c336",
+            "glog-pfp-ruleFileCode/v1": "07d135e9da02340fd859b614b0800fb08d520bb796effe738db1f3704c078f46"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "99e75fa1f8897b15bdf2500d458096c75a1f1718c6159dfbc6955ad5192a252d"
+            "glog-fp-ruleFileCode/v1": "07d135e9da02340fd859b614b0800fb08d520bb796effe738db1f3704c078f46"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "809b9ffa-869c-3d48-aee7-83677d3556a8",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/Lookup2.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 136,
+                  "startColumn": 7,
+                  "endLine": 137,
+                  "endColumn": 34,
+                  "snippet": {
+                    "text": "      for {\n        set id = $order(^PersonI(\"Name\", ln, fn, id))"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "c5946ff921c66d0b878a984d342732882e093de0ce619e81dc57cb5d3f02cd22",
+            "glog-pfp-ruleFileCode/v1": "caaf36c9f319da8e5993c4259c2a2a16ab3513103500ac512a5118c1b7596387"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "caaf36c9f319da8e5993c4259c2a2a16ab3513103500ac512a5118c1b7596387"
           },
           "properties": {}
         },
@@ -844,41 +927,6 @@
           "properties": {}
         },
         {
-          "ruleId": "2e26f975-c218-33b2-b535-ea3d524dd918",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/Lookup2.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 130,
-                  "startColumn": 5,
-                  "endLine": 131,
-                  "endColumn": 32,
-                  "snippet": {
-                    "text": "    for {\n      set fn = $order(^PersonI(\"Name\", ln, fn))"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "1987d19d334a3b35a7de2018bd27cf3861022855058164633a6a8d9cdf59c336",
-            "glog-pfp-ruleFileCode/v1": "07d135e9da02340fd859b614b0800fb08d520bb796effe738db1f3704c078f46"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "07d135e9da02340fd859b614b0800fb08d520bb796effe738db1f3704c078f46"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "f21f4170-a2c0-3ec6-9a64-058ba8f9a1f3",
           "kind": "fail",
           "level": "warning",
@@ -910,41 +958,6 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "65cb844543a221bb905802a945e385f3f788dca8870876ec7bbb7c9ca91f11c6"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "f5a0b927-ccf2-399c-9090-31dd2cd52298",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Potential Enumeration Vulnerability: Considerations for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/Lookup2.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 122,
-                  "startColumn": 3,
-                  "endLine": 123,
-                  "endColumn": 30,
-                  "snippet": {
-                    "text": "  for {\n    set ln = $order(^PersonI(\"Name\", ln))"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "06da1ab1d78a04b0938b08d90d5ffbb7ecdbf53741184801579a55a27307fba8",
-            "glog-pfp-ruleFileCode/v1": "89413d1c12b709c64bf39bca2d4d4a052556ac660a54b1d7a3bb9a2689922a77"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "89413d1c12b709c64bf39bca2d4d4a052556ac660a54b1d7a3bb9a2689922a77"
           },
           "properties": {}
         },
@@ -984,7 +997,7 @@
           "properties": {}
         },
         {
-          "ruleId": "809b9ffa-869c-3d48-aee7-83677d3556a8",
+          "ruleId": "b7b710e0-a579-3f23-8d02-8ee6cd1467a5",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -994,7 +1007,7 @@
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ObjectScript/Lookup2.cls",
+                  "uri": "src/ObjectScript/Lookup3.cls",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
@@ -1010,11 +1023,11 @@
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "c5946ff921c66d0b878a984d342732882e093de0ce619e81dc57cb5d3f02cd22",
-            "glog-pfp-ruleFileCode/v1": "caaf36c9f319da8e5993c4259c2a2a16ab3513103500ac512a5118c1b7596387"
+            "glog-pfp-ruleFileLineCode/v1": "566035e3aa69d809ba747a09a61b12f4bddd92efcb5d424bfe1a6941830495bd",
+            "glog-pfp-ruleFileCode/v1": "03d71a60c6fb6f3840cd4b51a843cb6a483d991b742cdbb1f8a72b3ba7ee52a9"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "caaf36c9f319da8e5993c4259c2a2a16ab3513103500ac512a5118c1b7596387"
+            "glog-fp-ruleFileCode/v1": "03d71a60c6fb6f3840cd4b51a843cb6a483d991b742cdbb1f8a72b3ba7ee52a9"
           },
           "properties": {}
         },
@@ -1089,42 +1102,7 @@
           "properties": {}
         },
         {
-          "ruleId": "b7b710e0-a579-3f23-8d02-8ee6cd1467a5",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Potential Enumeration Vulnerability: Consideration for Max-Results/Rate Limiting and Authorization Checks in Loop Over $ORDER(^Global...)\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/Lookup3.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 136,
-                  "startColumn": 7,
-                  "endLine": 137,
-                  "endColumn": 34,
-                  "snippet": {
-                    "text": "      for {\n        set id = $order(^PersonI(\"Name\", ln, fn, id))"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "566035e3aa69d809ba747a09a61b12f4bddd92efcb5d424bfe1a6941830495bd",
-            "glog-pfp-ruleFileCode/v1": "03d71a60c6fb6f3840cd4b51a843cb6a483d991b742cdbb1f8a72b3ba7ee52a9"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "03d71a60c6fb6f3840cd4b51a843cb6a483d991b742cdbb1f8a72b3ba7ee52a9"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "80e5bcc0-bd1f-325f-881b-f661c4d44193",
+          "ruleId": "1c63cc4b-0cc5-3298-8eb0-523a47135950",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1138,23 +1116,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 229,
+                  "startLine": 230,
                   "startColumn": 1,
-                  "endLine": 229,
+                  "endLine": 230,
                   "endColumn": 17,
                   "snippet": {
-                    "text": "  kill ^PersonI(\"Phone\", phone)"
+                    "text": "  kill ^PersonI(\"DOB\", intdob, id)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "f6bce1cae137605db71abc33ba5171de8773f03c266f9ae5b8b2571cc8f993c6",
-            "glog-pfp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
+            "glog-pfp-ruleFileLineCode/v1": "ae317b0b2529d136a98727ca20c860a5f69130866ce7764ab51296235befc3f1",
+            "glog-pfp-ruleFileCode/v1": "72280b74bd40d6c1b6730110938a1ed6931199110b9f9e2b968194cfea2c44ce"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
+            "glog-fp-ruleFileCode/v1": "72280b74bd40d6c1b6730110938a1ed6931199110b9f9e2b968194cfea2c44ce"
           },
           "properties": {}
         },
@@ -1194,6 +1172,41 @@
           "properties": {}
         },
         {
+          "ruleId": "80e5bcc0-bd1f-325f-881b-f661c4d44193",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Authorization and Consistency Verification for Global Node Deletion\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/Lookup3.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 229,
+                  "startColumn": 1,
+                  "endLine": 229,
+                  "endColumn": 17,
+                  "snippet": {
+                    "text": "  kill ^PersonI(\"Phone\", phone)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "f6bce1cae137605db71abc33ba5171de8773f03c266f9ae5b8b2571cc8f993c6",
+            "glog-pfp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
+          },
+          "properties": {}
+        },
+        {
           "ruleId": "5a8eaf42-0bfb-34db-9b94-e596fca1725d",
           "kind": "fail",
           "level": "warning",
@@ -1229,7 +1242,7 @@
           "properties": {}
         },
         {
-          "ruleId": "1c63cc4b-0cc5-3298-8eb0-523a47135950",
+          "ruleId": "8ce05a7d-fb70-3819-9558-f376f862e78e",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1243,23 +1256,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 230,
+                  "startLine": 314,
                   "startColumn": 1,
-                  "endLine": 230,
-                  "endColumn": 17,
+                  "endLine": 314,
+                  "endColumn": 19,
                   "snippet": {
-                    "text": "  kill ^PersonI(\"DOB\", intdob, id)"
+                    "text": "    kill ^PersonI(\"Name\", currentlast, currentfirst, id)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "ae317b0b2529d136a98727ca20c860a5f69130866ce7764ab51296235befc3f1",
-            "glog-pfp-ruleFileCode/v1": "72280b74bd40d6c1b6730110938a1ed6931199110b9f9e2b968194cfea2c44ce"
+            "glog-pfp-ruleFileLineCode/v1": "549252a2a90c1958ff803d2a3c54e0e499f769457676cd390c226e4576cd765e",
+            "glog-pfp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "72280b74bd40d6c1b6730110938a1ed6931199110b9f9e2b968194cfea2c44ce"
+            "glog-fp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
           },
           "properties": {}
         },
@@ -1295,41 +1308,6 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "0418632810a07515c059cac234c6be7ec2cb747aae142d87bf017991cf6a047f"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "8ce05a7d-fb70-3819-9558-f376f862e78e",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Authorization and Consistency Verification for Global Node Deletion\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/Lookup3.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 314,
-                  "startColumn": 1,
-                  "endLine": 314,
-                  "endColumn": 19,
-                  "snippet": {
-                    "text": "    kill ^PersonI(\"Name\", currentlast, currentfirst, id)"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "549252a2a90c1958ff803d2a3c54e0e499f769457676cd390c226e4576cd765e",
-            "glog-pfp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
           },
           "properties": {}
         }
