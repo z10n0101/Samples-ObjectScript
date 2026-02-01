@@ -12,6 +12,28 @@
           "informationUri": "https://www.glog.ai",
           "rules": [
             {
+              "id": "435010c9-558e-3363-b9d6-0240e98604bb",
+              "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the length of the input is not restricted or validated, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can exhaust the system resources (memory/CPU).\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input length limits and validation after the `read` command. This can be done by checking the length of the input and validating it against a predefined limit. If the input exceeds the limit, the program should reject it and ask for a new input.\n\n## Source Code Fix Recommendation\n\nHere is a code snippet that demonstrates how to enforce input length limits and validation:\n\n```objectscript\nread !, \"Name: \", name\nset maxNameLength = 50\nif $length(name) > maxNameLength {\n    write !, \"Input is too long. Please enter a name up to \", maxNameLength, \" characters.\"\n    quit 0\n}\n```\n\nIn this code, `maxNameLength` is the maximum allowed length for the name. If the length of the input name exceeds this limit, the program writes an error message and quits.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution for access control issues. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Additionally, environment safeguards and real logging/auditing should be implemented."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-400",
+                    "url": "https://cwe.mitre.org/data/definitions/400.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-400"
+                ]
+              }
+            },
+            {
               "id": "cafcafb1-54e4-3005-a9fe-3fd052454113",
               "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
               "helpUri": "https://www.glog.ai/",
@@ -34,12 +56,12 @@
               }
             },
             {
-              "id": "6c9216c5-1199-3e3d-be32-76444508b497",
+              "id": "29b13a5d-59a3-3bdc-bf3b-705753a4df6b",
               "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the `read` command is used without any restrictions on the length of the input, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can lead to resource exhaustion.\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input that can be read. This can be done by reading the input into a variable and then checking the length of the variable. If the length of the variable exceeds the maximum allowed length, the program should reject the input and ask the user to enter the input again.\n\n## Source Code Fix Recommendation\n\nHere is a code snippet that demonstrates how to enforce input validation and limit the length of the input:\n\n```objectscript\ndo {\n    read !, \"Phone: \", phone\n    if ($length(phone) > 10) {\n        write !, \"Phone number should not exceed 10 digits. Please try again.\"\n    } else {\n        quit\n    }\n} while (1)\n```\n\nIn this code snippet, the `do-while` loop will continue to ask the user for input until a valid phone number is entered. The length of the phone number is checked using the `$length` function. If the length of the phone number exceeds 10 digits, the program will display an error message and ask the user to enter the phone number again.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Additionally, environment safeguards and real logging/auditing should be implemented."
+                "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the length of the input is not restricted, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can exhaust the system resources (memory/CPU).\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input length limits and validation after the `read` command. This can be done by checking the length of the input and validating it before processing. If the input is not valid or exceeds the allowed length, the program should reject it and possibly log this event for auditing purposes.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the given code:\n\n```objectscript\nread !, \"Name: \" , name\nif $length(name)>100 {\n    write \"Input is too long. Please enter a name up to 100 characters.\",!\n    quit\n}\nif name'?1A.AN {\n    write \"Invalid input. Please enter a valid name.\",!\n    quit\n}\n```\n\nIn this fix, the length of the input `name` is checked to be not more than 100 characters. If it is, a message is displayed to the user and the program quits. Then, the input is validated to contain only alphanumeric characters. If it doesn't, a message is displayed to the user and the program quits.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution for access control issues. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript."
               },
               "properties": {
                 "cwe": [
@@ -78,34 +100,12 @@
               }
             },
             {
-              "id": "29b13a5d-59a3-3bdc-bf3b-705753a4df6b",
+              "id": "6c9216c5-1199-3e3d-be32-76444508b497",
               "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the length of the input is not restricted, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can exhaust the system resources (memory/CPU).\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input length limits and validation after the `read` command. This can be done by checking the length of the input and validating it before processing. If the input is not valid or exceeds the allowed length, the program should reject it and possibly log this event for auditing purposes.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the given code:\n\n```objectscript\nread !, \"Name: \" , name\nif $length(name)>100 {\n    write \"Input is too long. Please enter a name up to 100 characters.\",!\n    quit\n}\nif name'?1A.AN {\n    write \"Invalid input. Please enter a valid name.\",!\n    quit\n}\n```\n\nIn this fix, the length of the input `name` is checked to be not more than 100 characters. If it is, a message is displayed to the user and the program quits. Then, the input is validated to contain only alphanumeric characters. If it doesn't, a message is displayed to the user and the program quits.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution for access control issues. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-400",
-                    "url": "https://cwe.mitre.org/data/definitions/400.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-400"
-                ]
-              }
-            },
-            {
-              "id": "cd5c0c9e-441e-3ab5-ae94-990b4540352a",
-              "name": "\"READ lacks length limit and downstream validation, consider implementing #maxlen for enhanced security.\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe vulnerability in question pertains to the `READ` command in the ObjectScript programming language, which lacks a length limit and downstream validation. This can potentially lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply very large input, typically through a network-exposed UI or API.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to implement a length limit and downstream validation for the `READ` command. This can be achieved by keeping the normal line `READ`, then enforcing limits and validation.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    // enforce a length limit\n    if $LENGTH(name) > 100 {\n        write !, \"Name is too long. Please enter a name with 100 characters or less.\"\n        quit\n    }\n    // enforce downstream validation\n    if '..ValidName(name) {\n        return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n    } else {\n        write !, \"Invalid name. Please enter a valid name.\"\n    }\n} while 1\n```\n\nIn addition to the above, it is important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This can be achieved by checking user roles for authorization using `$SYSTEM.Security.Check()` in ObjectScript, along with implementing environment safeguards and real logging/auditing.\n\n## Library Dependencies\n\nThe provided code does not appear to have any library dependencies.\n\n## OWASP and CWE Resources\n\n- [CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that the above links are active and accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the `read` command is used without any restrictions on the length of the input, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can lead to resource exhaustion.\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input that can be read. This can be done by reading the input into a variable and then checking the length of the variable. If the length of the variable exceeds the maximum allowed length, the program should reject the input and ask the user to enter the input again.\n\n## Source Code Fix Recommendation\n\nHere is a code snippet that demonstrates how to enforce input validation and limit the length of the input:\n\n```objectscript\ndo {\n    read !, \"Phone: \", phone\n    if ($length(phone) > 10) {\n        write !, \"Phone number should not exceed 10 digits. Please try again.\"\n    } else {\n        quit\n    }\n} while (1)\n```\n\nIn this code snippet, the `do-while` loop will continue to ask the user for input until a valid phone number is entered. The length of the phone number is checked using the `$length` function. If the length of the phone number exceeds 10 digits, the program will display an error message and ask the user to enter the phone number again.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Additionally, environment safeguards and real logging/auditing should be implemented."
               },
               "properties": {
                 "cwe": [
@@ -144,34 +144,12 @@
               }
             },
             {
-              "id": "a812b057-eba4-3975-85d0-6cb81435013b",
-              "name": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\"",
+              "id": "3ed646f7-709c-3f10-a7ac-befa9871452f",
+              "name": "\"READ Vulnerability Due to Lack of Length Limit: Consider Implementing #maxlen for Enhanced Security\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability \"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\" in ObjectScript programming language refers to the potential for an attacker to cause a Denial of Service (DoS) by providing an excessively large input to the `READ` command. This can lead to resource exhaustion, as the system attempts to process the large input.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input that can be processed by the `READ` command. This can be achieved by checking the length of the input after the `READ` command and before processing the input further. If the input exceeds a certain limit, the system should reject the input and prompt the user to enter a smaller input.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $LENGTH(phone) > 20 { // assuming 20 is the maximum length of a phone number\n        write !, \"Input too long. Please enter a phone number with less than 20 characters.\"\n    } else {\n        if '..ValidPhone(.phone) {\n            // process phone number\n        } else {\n            write !, \"Invalid phone number. Please try again.\"\n        }\n    }\n} while 1\n```\n\nIn addition to the above code-level mitigation, it is also important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This can be achieved by using `$SYSTEM.Security.Check()` to check user roles for authorization.\n\n## Library Dependencies\n\nThe provided code does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-400",
-                    "url": "https://cwe.mitre.org/data/definitions/400.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-400"
-                ]
-              }
-            },
-            {
-              "id": "435010c9-558e-3363-b9d6-0240e98604bb",
-              "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the length of the input is not restricted or validated, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can exhaust the system resources (memory/CPU).\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input length limits and validation after the `read` command. This can be done by checking the length of the input and validating it against a predefined limit. If the input exceeds the limit, the program should reject it and ask for a new input.\n\n## Source Code Fix Recommendation\n\nHere is a code snippet that demonstrates how to enforce input length limits and validation:\n\n```objectscript\nread !, \"Name: \", name\nset maxNameLength = 50\nif $length(name) > maxNameLength {\n    write !, \"Input is too long. Please enter a name up to \", maxNameLength, \" characters.\"\n    quit 0\n}\n```\n\nIn this code, `maxNameLength` is the maximum allowed length for the name. If the length of the input name exceeds this limit, the program writes an error message and quits.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution for access control issues. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Additionally, environment safeguards and real logging/auditing should be implemented."
+                "markdown": "## Description\n\nThe vulnerability in question is related to the lack of length limit in the `read` operation in the ObjectScript programming language. This can potentially lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply very large input. In the provided code snippet, the `read` operation is used to get the user's date of birth (DOB) without any limit on the length of the input.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input after the `read` operation. This can be done by checking the length of the input and rejecting it if it exceeds a certain limit. Additionally, it is also important to validate the input to ensure that it is in the expected format.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"DOB: \", dob\n    if $length(dob) > 10 {\n        write !, \"Invalid input. Please enter a valid DOB.\"\n    } elseif '..ValidDOB(dob, .intdob) {\n        quit\n    }\n} while 1\n```\n\nIn this fix, the length of the input is checked after the `read` operation. If the length exceeds 10 characters (which is the maximum length for a date in the format `MM/DD/YYYY`), an error message is displayed and the loop continues. If the length is within the limit and the input is valid, the loop is exited.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP and CWE Resources\n\n- [OWASP Top 10 2017 Category A3: Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution for access control issues. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Additionally, it is also recommended to implement environment safeguards and real logging/auditing."
               },
               "properties": {
                 "cwe": [
@@ -193,7 +171,7 @@
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability \"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\" in ObjectScript refers to the potential for an attacker to cause a Denial of Service (DoS) by providing an excessively large input. This can lead to resource exhaustion, as the system attempts to process the large input, consuming significant memory and CPU resources.\n\nIn the provided code snippet, the `read` command is used without a length limit, which means that an attacker could potentially input a very large string, causing the system to consume excessive resources.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input string. This can be done by reading the input as normal, and then checking the length of the string. If the string is longer than the maximum allowed length, the program should reject the input and prompt the user to enter a shorter string.\n\nAdditionally, it is important to validate the input downstream. This means checking that the input is in the expected format and does not contain any malicious code or commands.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $LENGTH(name) > 100 { // check if the length of the string is greater than the maximum allowed length\n        write !, \"Input too long. Please enter a name shorter than 100 characters.\"\n        quit\n    }\n    return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n} While '..ValidName(name)\n```\n\nIn this fix, the program checks if the length of the input string is greater than 100 characters. If it is, the program writes an error message and exits. Otherwise, it continues as normal.\n\nNote: This fix assumes that the maximum allowed length for the name is 100 characters. Adjust this value as necessary for your specific use case.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to require any specific library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [CWE-400: Uncontrolled Resource Consumption ('Resource Exhaustion')](https://cwe.mitre.org/data/definitions/400.html)\n\n## Additional Notes\n\nRemember that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution for access control issues. This includes checking user roles for authorization using `$SYSTEM.Security.Check()`, implementing environment safeguards, and maintaining proper logging and auditing practices."
+                "markdown": "## Description\n\nThe vulnerability in question is related to the `READ` command in ObjectScript, which lacks a length limit. This can potentially lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply very large input. The `READ` command is also used without downstream validation, which can lead to security issues if the input is not properly validated.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input and to perform downstream validation on the input. This can be done by checking the length of the input string and validating the input before using it.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $LENGTH(name) > 256 { // limit the length of the input\n        write !, \"Input too long. Please enter a name up to 256 characters.\"\n        quit\n    }\n    return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n} While '..ValidName(name)\n```\n\nIn this fix, the length of the input is checked and if it exceeds 256 characters, an error message is displayed and the loop is exited. The `ValidName` method should also be implemented to validate the input.\n\nNote: Enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This can be done using `$SYSTEM.Security.Check()` in addition to the above code fix.\n\n## Library Dependencies\n\nThe code does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10 - A1 Injection](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that the links provided are active and accessible to anonymous users."
               },
               "properties": {
                 "cwe": [
@@ -206,6 +184,28 @@
                 "kind": "FAIL",
                 "tags": [
                   "CWE-400"
+                ]
+              }
+            },
+            {
+              "id": "a812b057-eba4-3975-85d0-6cb81435013b",
+              "name": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe vulnerability in question pertains to the `READ` command in the ObjectScript programming language. The `READ` command is used to get input from the user. In the provided code snippet, there is no limit on the length of the input that can be provided by the user. This can lead to resource exhaustion or denial of service (DoS) if an attacker supplies a very large input. Additionally, the input is not validated downstream, which can lead to further security issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input and to validate the input downstream. In ObjectScript, the `#` symbol is used to specify a fixed number of characters to read. However, using `#number` is not recommended in this case as it means reading exactly \"number\" characters, not “up to number”. Any extra characters the user typed can remain in the input buffer and be consumed by subsequent `READ`s, which can cause confusing behavior. Instead, keep the normal line `READ`, then enforce limits/validation.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $LENGTH(phone) > 10 {\n        write !, \"Phone number is too long. Please enter a valid phone number.\"\n    } elseif '..ValidPhone(.phone) {\n        quit\n    }\n} while 1\n```\n\nIn this fix, the length of the phone number is checked after it is read. If the length is greater than 10, an error message is displayed and the loop continues. If the phone number is valid, the loop is exited.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP Top 10 2017 Category A3: Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\n## Note\n\nIn addition to the source code fix, it is important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This should be the primary solution for dealing with access control issues. The ObjectScript resource/privilege check via `$SYSTEM.Security.Check()` can be used for this purpose, along with environment safeguards and real logging/auditing."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-20",
+                    "url": "https://cwe.mitre.org/data/definitions/20.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-20"
                 ]
               }
             },
@@ -408,28 +408,6 @@
               }
             },
             {
-              "id": "54211a2f-95e9-3e07-897e-253a1bd9dc64",
-              "name": "\"READ Validation Vulnerability: No Length Limit, Suggests #maxlen for Enhanced Defense\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe vulnerability in question is related to the lack of input length validation in the `read` function of the ObjectScript programming language. This vulnerability can lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply a very large input. This is particularly concerning in network-exposed UIs or APIs.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input length limits and validation after the `read` operation. This can be done by checking the length of the input and ensuring it is within acceptable limits before proceeding with further processing. \n\nIn addition, it is important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This should be the primary solution for dealing with access control issues.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $length(phone) > 10 {\n        write !, \"Phone number is too long. Please enter a valid phone number.\"\n    } else {\n        if '..ValidPhone(.phone) {\n            // proceed with further processing\n        } else {\n            write !, \"Invalid phone number. Please try again.\"\n        }\n    }\n} While 1\n```\n\nIn this fix, the length of the phone number is checked after it is read. If the length is more than 10 characters, an error message is displayed and the user is prompted to enter a valid phone number. If the length is within acceptable limits, the phone number is then validated using the `ValidPhone` function. If the phone number is not valid, an error message is displayed and the user is prompted to try again.\n\n## Library Dependencies\n\nThe provided code does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP: Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that these links are subject to change and may not be accessible at all times."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-400",
-                    "url": "https://cwe.mitre.org/data/definitions/400.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-400"
-                ]
-              }
-            },
-            {
               "id": "72d80781-e079-3971-b3e2-6b71b145a3f1",
               "name": "\"Authorization Verification and Referential/Index Consistency Maintenance in Global Node Deletion\"",
               "helpUri": "https://www.glog.ai/",
@@ -448,6 +426,28 @@
                 "kind": "FAIL",
                 "tags": [
                   "CWE-285"
+                ]
+              }
+            },
+            {
+              "id": "54211a2f-95e9-3e07-897e-253a1bd9dc64",
+              "name": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe vulnerability in question pertains to the `READ` command in the ObjectScript programming language, which lacks a length limit and requires downstream validation. This can potentially lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply very large input. \n\nIn the provided code snippet, the `READ` command is used to accept a phone number input from the user. However, there is no limit on the length of the input, which can lead to the aforementioned issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input and perform validation checks downstream. This can be achieved by keeping the normal line `READ`, then enforcing limits/validation.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $length(phone) > 10 {\n        write !, \"Invalid input. Phone number should not exceed 10 characters.\"\n    } else {\n        if '..ValidPhone(.phone) {\n            quit\n        }\n    }\n} While 1\n```\n\nIn this fix, the length of the phone number is checked after the `READ` command. If the length exceeds 10 characters, an error message is displayed and the loop continues. If the length is within the limit, the phone number is validated using the `ValidPhone` function. If the validation passes, the loop is exited.\n\nNote: Enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This can be achieved by using the `$SYSTEM.Security.Check()` function in ObjectScript for resource/privilege checks, along with environment safeguards and real logging/auditing.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP and CWE Resources\n\n- [OWASP Top 10 2017 Category A3: Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that the links provided are active and accessible to anonymous users."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-400",
+                    "url": "https://cwe.mitre.org/data/definitions/400.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-400"
                 ]
               }
             },
@@ -631,12 +631,12 @@
               }
             },
             {
-              "id": "3ed646f7-709c-3f10-a7ac-befa9871452f",
+              "id": "cd5c0c9e-441e-3ab5-ae94-990b4540352a",
               "name": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability in question is related to the `READ` command in the ObjectScript programming language. The `READ` command is used to get input from the user. In the provided code snippet, there is no limit on the length of the input that can be provided by the user. This can lead to resource exhaustion or denial of service (DoS) if an attacker provides a very large input. Additionally, the input is not validated downstream, which can lead to further security issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input and to validate the input downstream. In ObjectScript, the `#` symbol is used to specify a fixed number of characters to read. However, using `#number` is not recommended in this case as it means reading exactly \"number\" characters, not “up to number”. Any extra characters the user typed can remain in the input buffer and be consumed by subsequent `READ`s, which can cause confusing behavior. Instead, keep the normal line `READ`, then enforce limits/validation.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"DOB: \", dob\n    if $LENGTH(dob) > MAX_LENGTH {\n        write !, \"Input is too long. Please enter a DOB of up to \", MAX_LENGTH, \" characters.\"\n    } elseif '..ValidDOB(dob, .intdob) {\n        quit\n    }\n} while 1\n```\n\nIn this fix, `MAX_LENGTH` is a constant that should be defined elsewhere in your code, representing the maximum allowed length of the input.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP: Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\n## Note\n\nIn addition to the source code fix, enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Also, it is important to have environment safeguards and real logging/auditing in place."
+                "markdown": "## Description\n\nThe vulnerability in question is related to the `READ` command in the ObjectScript programming language. The `READ` command is used to get input from the user. In the provided code snippet, there is no limit on the length of the input that can be provided by the user. This can lead to resource exhaustion or denial of service (DoS) if an attacker provides a very large input. Additionally, the input is not validated downstream, which can lead to further security issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input and to validate the input downstream. This can be done by checking the length of the input string and validating it before proceeding with the rest of the code. \n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $LENGTH(name) > 50 { // limit the length of the input to 50 characters\n        write !, \"Input is too long. Please enter a name with 50 characters or less.\"\n    } else {\n        if '..ValidName(name) {\n            return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n        } else {\n            write !, \"Invalid name. Please try again.\"\n        }\n    }\n} while 1\n```\n\nIn this fix, the length of the input is checked and if it is more than 50 characters, an error message is displayed and the user is asked to enter the input again. If the length of the input is within the limit, it is then validated using the `ValidName` method. If the input is not valid, an error message is displayed and the user is asked to enter the input again.\n\n## Library Dependencies\n\nThe provided code snippet does not require any library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. The `$SYSTEM.Security.Check()` method can be used to check user roles for authorization. Additionally, environment safeguards and real logging/auditing should be implemented."
               },
               "properties": {
                 "cwe": [
@@ -654,14 +654,18 @@
             },
             {
               "id": "499a80f3-9d51-308a-a8b7-d54e1e77d26a",
-              "name": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\"",
+              "name": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability in question pertains to the `READ` command in the ObjectScript programming language, which lacks a length limit. This can potentially lead to resource exhaustion or denial of service (DoS) if an attacker supplies a very large input. The `READ` command is used to get user input, and in this case, it is used to get the date of birth (DOB) without any length limit or validation. \n\nThe code snippet also shows that the input is passed to a function `ValidDOB` for validation. However, this validation is done downstream, which means that the system resources could already be exhausted before the validation is done.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input string immediately after the `READ` command. This can be done by checking the length of the input string and discarding it if it exceeds a certain limit. \n\nAdditionally, it is important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This should be the primary solution for access control issues.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code snippet:\n\n```objectscript\ndo {\n    read !, \"DOB: \", dob\n    if $LENGTH(dob) > 10 {\n        write !, \"Input too long. Please enter a valid DOB.\"\n    } else {\n        if '..ValidDOB(dob, .intdob) {\n            // continue with the rest of the code\n        } else {\n            write !, \"Invalid DOB. Please try again.\"\n        }\n    }\n} While 1\n```\n\nIn this fix, the length of the input string is checked immediately after the `READ` command. If the length exceeds 10 characters (which is the maximum length for a date in the format `MM/DD/YYYY`), an error message is displayed and the user is prompted to enter the DOB again. If the length is within the limit, the input is passed to the `ValidDOB` function for further validation.\n\n## Links\n\n- [OWASP Top 10](https://owasp.org/www-project-top-ten/)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that these links are subject to change and may not be accessible to all users."
+                "markdown": "## Description\n\nThe vulnerability in question pertains to the `READ` command in the ObjectScript programming language. The `READ` command is used to get input from the user. In the provided code snippet, there is no limit set on the length of the input that can be read. This can potentially lead to resource exhaustion or denial of service (DoS) if an attacker supplies a very large input. Furthermore, the input is not validated downstream, which can lead to other types of vulnerabilities.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the input and to validate the input downstream. In ObjectScript, the `#` symbol can be used to specify a fixed number of characters to read. However, this is not a great solution in this case, as any extra characters the user types can remain in the input buffer and be consumed by subsequent `READ`s, which can cause confusing behavior. A better solution is to keep the normal line `READ`, then enforce limits and validation on the input.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```objectscript\ndo {\n    read !, \"DOB: \", dob\n    if $LENGTH(dob) > MAX_LENGTH {\n        write !, \"Input too long. Please enter a DOB of \", MAX_LENGTH, \" characters or less.\"\n    } elseif '..ValidDOB(dob, .intdob) {\n        quit\n    } else {\n        write !, \"Invalid DOB. Please try again.\"\n    }\n} while 1\n```\n\nIn this fix, `MAX_LENGTH` should be replaced with the maximum length of the input that your application can handle. The `if` statement checks if the length of the input is greater than `MAX_LENGTH`, and if so, it informs the user that their input is too long and asks them to try again. If the length of the input is not too long, it then checks if the input is valid using the `ValidDOB` function. If the input is valid, it breaks out of the loop, otherwise it informs the user that their input is invalid and asks them to try again.\n\nNote: Enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)"
               },
               "properties": {
                 "cwe": [
+                  {
+                    "id": "CWE-20",
+                    "url": "https://cwe.mitre.org/data/definitions/20.html"
+                  },
                   {
                     "id": "CWE-400",
                     "url": "https://cwe.mitre.org/data/definitions/400.html"
@@ -670,6 +674,7 @@
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
+                  "CWE-20",
                   "CWE-400"
                 ]
               }
@@ -685,6 +690,41 @@
       },
       "language": "en-US",
       "results": [
+        {
+          "ruleId": "435010c9-558e-3363-b9d6-0240e98604bb",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unrestricted Read Length or Lack of Input Validation Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/DataEntry2.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 15,
+                  "startColumn": 1,
+                  "endLine": 15,
+                  "endColumn": 25,
+                  "snippet": {
+                    "text": "  read !, \"Name: \", name"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "1588fd68e296aefb65029f3ddd8a6aa0477c00f7d05c9f86e8e3ac695b8f4a04",
+            "glog-pfp-ruleFileCode/v1": "c106970a3015e1768d0c46da207f0b746f250550d6e18743983cea2298ec866b"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "c106970a3015e1768d0c46da207f0b746f250550d6e18743983cea2298ec866b"
+          },
+          "properties": {}
+        },
         {
           "ruleId": "cafcafb1-54e4-3005-a9fe-3fd052454113",
           "kind": "fail",
@@ -717,41 +757,6 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "4d988c25ff43dbdbaf7a05cd1696f869fd7cba05aa4552c4982d3b4e94de80dd"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "6c9216c5-1199-3e3d-be32-76444508b497",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unrestricted Read Length or Lack of Input Validation Vulnerability"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry2.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 17,
-                  "startColumn": 1,
-                  "endLine": 17,
-                  "endColumn": 27,
-                  "snippet": {
-                    "text": "  read !, \"Phone: \", phone"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "f88fed0aa0791482ac2ccafcd80ab66c6fd9df6132b217e52ac397e114e40ec3",
-            "glog-pfp-ruleFileCode/v1": "bdb55c573e4c113c915bdee6240a0a5f7481ccdaf9736a6b7f6b9901f2e6ef18"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "bdb55c573e4c113c915bdee6240a0a5f7481ccdaf9736a6b7f6b9901f2e6ef18"
           },
           "properties": {}
         },
@@ -826,37 +831,37 @@
           "properties": {}
         },
         {
-          "ruleId": "cd5c0c9e-441e-3ab5-ae94-990b4540352a",
+          "ruleId": "6c9216c5-1199-3e3d-be32-76444508b497",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"READ lacks length limit and downstream validation, consider implementing #maxlen for enhanced security.\""
+            "text": "Unrestricted Read Length or Lack of Input Validation Vulnerability"
           },
           "locations": [
             {
               "physicalLocation": {
                 "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry3.cls",
+                  "uri": "src/ObjectScript/DataEntry2.cls",
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 15,
-                  "startColumn": 3,
-                  "endLine": 18,
-                  "endColumn": 13,
+                  "startLine": 17,
+                  "startColumn": 1,
+                  "endLine": 17,
+                  "endColumn": 27,
                   "snippet": {
-                    "text": "  do {\n    read !, \"Name: \", name\n    return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n  } while '..ValidName(name)"
+                    "text": "  read !, \"Phone: \", phone"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "88330178e5906f5a327710de523a76fc6012996262e842edc3d3ef9e40b52042",
-            "glog-pfp-ruleFileCode/v1": "72f9cb269d60974d2dec07781c8313d932a75856831e71295bf90cefa4d10a8a"
+            "glog-pfp-ruleFileLineCode/v1": "f88fed0aa0791482ac2ccafcd80ab66c6fd9df6132b217e52ac397e114e40ec3",
+            "glog-pfp-ruleFileCode/v1": "bdb55c573e4c113c915bdee6240a0a5f7481ccdaf9736a6b7f6b9901f2e6ef18"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "72f9cb269d60974d2dec07781c8313d932a75856831e71295bf90cefa4d10a8a"
+            "glog-fp-ruleFileCode/v1": "bdb55c573e4c113c915bdee6240a0a5f7481ccdaf9736a6b7f6b9901f2e6ef18"
           },
           "properties": {}
         },
@@ -896,11 +901,11 @@
           "properties": {}
         },
         {
-          "ruleId": "a812b057-eba4-3975-85d0-6cb81435013b",
+          "ruleId": "3ed646f7-709c-3f10-a7ac-befa9871452f",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\""
+            "text": "\"READ Vulnerability Due to Lack of Length Limit: Consider Implementing #maxlen for Enhanced Security\""
           },
           "locations": [
             {
@@ -910,58 +915,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 20,
+                  "startLine": 24,
                   "startColumn": 3,
-                  "endLine": 22,
+                  "endLine": 26,
                   "endColumn": 13,
                   "snippet": {
-                    "text": "  do {\n    read !, \"Phone (617): \", phone\n  } while '..ValidPhone(.phone)"
+                    "text": "  do {\n    read !, \"DOB: \", dob\n  } while '..ValidDOB(dob, .intdob)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "aa241c83c46100896efcf086be922b16a9d5bbf34ebe222e5e7231ccd43bcf56",
-            "glog-pfp-ruleFileCode/v1": "17f42aea76a5e604c169425e393560120a0b62ef05cdf5447627310284e761c3"
+            "glog-pfp-ruleFileLineCode/v1": "e6d0ee4d2d6533856c3de647e91454b57aa63cb689353fc9e354fd62284dafac",
+            "glog-pfp-ruleFileCode/v1": "94dc920180ff2b72d37f7c85a52814c9cf11f1d1042a584c14a23c0cc8b7f587"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "17f42aea76a5e604c169425e393560120a0b62ef05cdf5447627310284e761c3"
-          },
-          "properties": {}
-        },
-        {
-          "ruleId": "435010c9-558e-3363-b9d6-0240e98604bb",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unrestricted Read Length or Lack of Input Validation Vulnerability"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry2.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 15,
-                  "startColumn": 1,
-                  "endLine": 15,
-                  "endColumn": 25,
-                  "snippet": {
-                    "text": "  read !, \"Name: \", name"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "1588fd68e296aefb65029f3ddd8a6aa0477c00f7d05c9f86e8e3ac695b8f4a04",
-            "glog-pfp-ruleFileCode/v1": "c106970a3015e1768d0c46da207f0b746f250550d6e18743983cea2298ec866b"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "c106970a3015e1768d0c46da207f0b746f250550d6e18743983cea2298ec866b"
+            "glog-fp-ruleFileCode/v1": "94dc920180ff2b72d37f7c85a52814c9cf11f1d1042a584c14a23c0cc8b7f587"
           },
           "properties": {}
         },
@@ -997,6 +967,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "b7eef19b46d93b7571a649686a9292b219f18d52d1f86e4406b849c6e49c91f1"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "a812b057-eba4-3975-85d0-6cb81435013b",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/DataEntry3.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 20,
+                  "startColumn": 3,
+                  "endLine": 22,
+                  "endColumn": 13,
+                  "snippet": {
+                    "text": "  do {\n    read !, \"Phone (617): \", phone\n  } while '..ValidPhone(.phone)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "aa241c83c46100896efcf086be922b16a9d5bbf34ebe222e5e7231ccd43bcf56",
+            "glog-pfp-ruleFileCode/v1": "17f42aea76a5e604c169425e393560120a0b62ef05cdf5447627310284e761c3"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "17f42aea76a5e604c169425e393560120a0b62ef05cdf5447627310284e761c3"
           },
           "properties": {}
         },
@@ -1316,41 +1321,6 @@
           "properties": {}
         },
         {
-          "ruleId": "54211a2f-95e9-3e07-897e-253a1bd9dc64",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"READ Validation Vulnerability: No Length Limit, Suggests #maxlen for Enhanced Defense\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry4.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 21,
-                  "startColumn": 3,
-                  "endLine": 23,
-                  "endColumn": 13,
-                  "snippet": {
-                    "text": "  do {\n    read !, \"Phone (617): \", phone\n  } While '..ValidPhone(.phone)"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "2224ea682cca3496a5065321a9b213e3b1c825283f2c495757f70f950307605b",
-            "glog-pfp-ruleFileCode/v1": "0526502925ea06aca6d1dfb2d861bdb9d35e6a60becfaf6287af14ebcb3c3c6e"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "0526502925ea06aca6d1dfb2d861bdb9d35e6a60becfaf6287af14ebcb3c3c6e"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "72d80781-e079-3971-b3e2-6b71b145a3f1",
           "kind": "fail",
           "level": "warning",
@@ -1382,6 +1352,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "fbfa074c25598a93d276a65d1cd8f7625c3162ef0859e7ae8e56ed97364861dd"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "54211a2f-95e9-3e07-897e-253a1bd9dc64",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/DataEntry4.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 21,
+                  "startColumn": 3,
+                  "endLine": 23,
+                  "endColumn": 13,
+                  "snippet": {
+                    "text": "  do {\n    read !, \"Phone (617): \", phone\n  } While '..ValidPhone(.phone)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "2224ea682cca3496a5065321a9b213e3b1c825283f2c495757f70f950307605b",
+            "glog-pfp-ruleFileCode/v1": "0526502925ea06aca6d1dfb2d861bdb9d35e6a60becfaf6287af14ebcb3c3c6e"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "0526502925ea06aca6d1dfb2d861bdb9d35e6a60becfaf6287af14ebcb3c3c6e"
           },
           "properties": {}
         },
@@ -1631,7 +1636,7 @@
           "properties": {}
         },
         {
-          "ruleId": "3ed646f7-709c-3f10-a7ac-befa9871452f",
+          "ruleId": "cd5c0c9e-441e-3ab5-ae94-990b4540352a",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1645,23 +1650,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 24,
+                  "startLine": 15,
                   "startColumn": 3,
-                  "endLine": 26,
+                  "endLine": 18,
                   "endColumn": 13,
                   "snippet": {
-                    "text": "  do {\n    read !, \"DOB: \", dob\n  } while '..ValidDOB(dob, .intdob)"
+                    "text": "  do {\n    read !, \"Name: \", name\n    return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n  } while '..ValidName(name)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "e6d0ee4d2d6533856c3de647e91454b57aa63cb689353fc9e354fd62284dafac",
-            "glog-pfp-ruleFileCode/v1": "94dc920180ff2b72d37f7c85a52814c9cf11f1d1042a584c14a23c0cc8b7f587"
+            "glog-pfp-ruleFileLineCode/v1": "88330178e5906f5a327710de523a76fc6012996262e842edc3d3ef9e40b52042",
+            "glog-pfp-ruleFileCode/v1": "72f9cb269d60974d2dec07781c8313d932a75856831e71295bf90cefa4d10a8a"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "94dc920180ff2b72d37f7c85a52814c9cf11f1d1042a584c14a23c0cc8b7f587"
+            "glog-fp-ruleFileCode/v1": "72f9cb269d60974d2dec07781c8313d932a75856831e71295bf90cefa4d10a8a"
           },
           "properties": {}
         },
@@ -1670,7 +1675,7 @@
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\""
+            "text": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\""
           },
           "locations": [
             {
