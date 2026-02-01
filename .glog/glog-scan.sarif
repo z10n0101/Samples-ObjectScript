@@ -12,34 +12,39 @@
           "informationUri": "https://www.glog.ai",
           "rules": [
             {
-              "id": "cafcafb1-54e4-3005-a9fe-3fd052454113",
-              "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nIn the ObjectScript programming language, the `read` command is used to get input from the user. If the `read` command is used without any restrictions on the length of the input, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can lead to resource exhaustion.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input that can be read. This can be done by reading the input into a variable and then checking the length of the variable. If the length of the variable exceeds the maximum allowed length, the program should discard the input and ask the user to enter the input again.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\nread !, \"Phone: \", phone\nif $LENGTH(phone) > 15 {\n    write \"Phone number is too long. Please enter a valid phone number.\"\n} else {\n    // Continue with the rest of the code\n}\n```\n\nIn this fix, the `read` command is used to get the phone number from the user. The length of the phone number is then checked using the `$LENGTH` function. If the length of the phone number is greater than 15, the program writes an error message and asks the user to enter a valid phone number.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)"
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-400",
-                    "url": "https://cwe.mitre.org/data/definitions/400.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-400"
-                ]
-              }
-            },
-            {
               "id": "dde36b30-4084-3114-9c88-74272d0a459d",
               "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
                 "markdown": "## Description\n\nIn the InterSystems ObjectScript programming language, the `read` command is used to get input from the user. If the `read` command is used without any restrictions on the length of the input, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can lead to resource exhaustion.\n\n## Mitigation\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input that can be read. This can be done by reading the input into a variable and then checking the length of the variable. If the length of the variable exceeds the maximum allowed length, the program should discard the input and ask the user to enter the input again.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\nread !, \"DOB: \", dob\nif $LENGTH(dob) > MAX_LENGTH {\n    write \"Input is too long. Please enter a DOB of length less than \", MAX_LENGTH, \".\"\n    // Ask the user to enter the input again\n    read !, \"DOB: \", dob\n}\n```\n\nIn the above code, `MAX_LENGTH` is a constant that defines the maximum allowed length of the input. The `if` statement checks if the length of the input exceeds `MAX_LENGTH`. If it does, the program discards the input and asks the user to enter the input again.\n\nNote: This code fix does not require any additional library dependencies.\n\n## OWASP Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [OWASP Unrestricted File Upload](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)"
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-400",
+                    "url": "https://cwe.mitre.org/data/definitions/400.html"
+                  },
+                  {
+                    "id": "CWE-20",
+                    "url": "https://cwe.mitre.org/data/definitions/20.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-400",
+                  "CWE-20"
+                ]
+              }
+            },
+            {
+              "id": "435010c9-558e-3363-b9d6-0240e98604bb",
+              "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe \"Unrestricted Read Length or Lack of Input Validation Vulnerability\" in ObjectScript programming language is a security flaw that allows an attacker to cause a denial of service (DoS) attack by providing an excessively large input. This vulnerability occurs when the program does not validate or improperly validates the length of the input before reading it. This can lead to resource exhaustion as the system tries to process the large input, causing the application to slow down or crash, resulting in a DoS condition.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the size of the input that can be processed by the application. This can be achieved by checking the length of the input and rejecting it if it exceeds a certain limit. Additionally, it is also important to handle exceptions that may occur when the input is too large to prevent the application from crashing.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\nread !, \"Name: \", name\nif $LENGTH(name)>100 {\n    write \"Input is too long. Please enter a name that is 100 characters or less.\"\n} else {\n    // Process the input\n}\n```\n\nIn this fix, the length of the input is checked before it is processed. If the input is longer than 100 characters, an error message is displayed and the input is not processed.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [OWASP Unrestricted File Upload](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\nNote: Always ensure to enforce authorization using IRIS security (resources/roles) and/or application authentication as a primary solution. This should be in addition to the proposed solution in the source code."
               },
               "properties": {
                 "cwe": [
@@ -83,51 +88,24 @@
               }
             },
             {
-              "id": "435010c9-558e-3363-b9d6-0240e98604bb",
+              "id": "cafcafb1-54e4-3005-a9fe-3fd052454113",
               "name": "Unrestricted Read Length or Lack of Input Validation Vulnerability",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe \"Unrestricted Read Length or Lack of Input Validation Vulnerability\" in ObjectScript programming language is a security flaw that allows an attacker to cause a denial of service (DoS) attack by providing an excessively large input. This vulnerability occurs when the program does not validate or improperly validates the length of the input before reading it. This can lead to resource exhaustion as the system tries to process the large input, causing the application to slow down or crash, resulting in a DoS condition.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the size of the input that can be processed by the application. This can be achieved by checking the length of the input and rejecting it if it exceeds a certain limit. Additionally, it is also important to handle exceptions that may occur when the input is too large to prevent the application from crashing.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\nread !, \"Name: \", name\nif $LENGTH(name)>100 {\n    write \"Input is too long. Please enter a name that is 100 characters or less.\"\n} else {\n    // Process the input\n}\n```\n\nIn this fix, the length of the input is checked before it is processed. If the input is longer than 100 characters, an error message is displayed and the input is not processed.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [OWASP Unrestricted File Upload](https://owasp.org/www-community/vulnerabilities/Unrestricted_File_Upload)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\nNote: Always ensure to enforce authorization using IRIS security (resources/roles) and/or application authentication as a primary solution. This should be in addition to the proposed solution in the source code."
+                "markdown": "## Description\n\nIn the ObjectScript programming language, the `read` command is used to get input from the user. If the `read` command is used without any restrictions on the length of the input, it can lead to a vulnerability known as Unrestricted Read Length or Lack of Input Validation Vulnerability. This vulnerability can be exploited by an attacker to cause a Denial of Service (DoS) attack by providing a very large input, which can lead to resource exhaustion.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input that can be read. This can be done by reading the input into a variable and then checking the length of the variable. If the length of the variable exceeds the maximum allowed length, the program should discard the input and ask the user to enter the input again.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability in the provided code:\n\n```objectscript\nread !, \"Phone: \", phone\nif $LENGTH(phone) > 15 {\n    write \"Phone number is too long. Please enter a valid phone number.\"\n} else {\n    // Continue with the rest of the code\n}\n```\n\nIn this fix, the `read` command is used to get the phone number from the user. The length of the phone number is then checked using the `$LENGTH` function. If the length of the phone number is greater than 15, the program writes an error message and asks the user to enter a valid phone number.\n\n## Library Dependencies\n\nThe provided code does not require any library dependencies to execute properly.\n\n## OWASP Resources\n\n- [OWASP Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)"
               },
               "properties": {
                 "cwe": [
                   {
                     "id": "CWE-400",
                     "url": "https://cwe.mitre.org/data/definitions/400.html"
-                  },
-                  {
-                    "id": "CWE-20",
-                    "url": "https://cwe.mitre.org/data/definitions/20.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-400",
-                  "CWE-20"
-                ]
-              }
-            },
-            {
-              "id": "cd5c0c9e-441e-3ab5-ae94-990b4540352a",
-              "name": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe vulnerability is related to the `READ` command in ObjectScript, which is used to get user input. In the provided code snippet, there is no limit on the length of the input that can be provided by the user. This can lead to resource exhaustion or denial of service (DoS) attacks if an attacker provides a very large input. Additionally, the input is not validated downstream, which can lead to further security issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the user input and to validate the input downstream. This can be done by checking the length of the input string after it is read and before it is used in the rest of the program. If the length of the input exceeds the limit, the program should reject the input and ask the user to enter it again. Additionally, the input should be validated to ensure it meets the required format and does not contain any malicious data.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $LENGTH(name) > 100 { // limit the length of the input to 100 characters\n        write !, \"Input is too long. Please enter a name with 100 characters or less.\"\n    } else {\n        return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n    }\n} while '..ValidName(name)\n```\n\nIn this fix, the length of the input is checked after it is read. If the length exceeds 100 characters, an error message is displayed and the user is asked to enter the input again. The `ValidName` method should also be updated to validate the format of the input.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP Resources and CWE\n\n- [OWASP Top 10 - A1 Injection](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\n## Note\n\nIn addition to the source code fix, it is recommended to enforce authorization using IRIS security (resources/roles) and/or application authentication. This can be done using the `$SYSTEM.Security.Check()` method in ObjectScript. This should be combined with environment safeguards and real logging/auditing to ensure the security of the application."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-20",
-                    "url": "https://cwe.mitre.org/data/definitions/20.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-20"
+                  "CWE-400"
                 ]
               }
             },
@@ -181,24 +159,24 @@
               }
             },
             {
-              "id": "42493282-59f2-325f-a414-89b76af33cf1",
-              "name": "\"READ lacks length limit and downstream validation, consider implementing #maxlen for enhanced security.\"",
+              "id": "cd5c0c9e-441e-3ab5-ae94-990b4540352a",
+              "name": "\"READ Vulnerability: No Length Limit and Lacks Downstream Validation - Suggest Adding #maxlen for Enhanced Security\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability in question pertains to the lack of a length limit and downstream validation when reading user input in the ObjectScript programming language. This can potentially lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply a very large input. \n\nIn the provided code snippet, the `read` command is used to get user input without any limit on the length of the input. This can potentially allow an attacker to cause a DoS attack by providing an extremely large input, causing the system to consume excessive resources trying to process the input.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to implement a length limit on the user input and perform downstream validation. This can be achieved by checking the length of the input after it is read and before it is processed. If the input exceeds the maximum allowed length, the program should reject the input and possibly alert the user that their input is too long.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $length(name) > 100 { // assuming 100 is the maximum allowed length\n        write !, \"Input is too long. Please enter a name up to 100 characters.\"\n    } else {\n        return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n    }\n} While '..ValidName(name)\n```\n\nIn this fix, the length of the input is checked immediately after it is read. If the length exceeds 100 characters, the program writes an error message to the user and continues to the next iteration of the loop. If the length is within the allowed limit, the program proceeds as before.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP Resources and CWE\n\n- [OWASP - Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that the above links are subject to change and may not be accessible to all users. Always ensure that the links are valid and active before adding them to the report."
+                "markdown": "## Description\n\nThe vulnerability is related to the `READ` command in ObjectScript, which is used to get user input. In the provided code snippet, there is no limit on the length of the input that can be provided by the user. This can lead to resource exhaustion or denial of service (DoS) attacks if an attacker provides a very large input. Additionally, the input is not validated downstream, which can lead to further security issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce a limit on the length of the user input and to validate the input downstream. This can be done by checking the length of the input string after it is read and before it is used in the rest of the program. If the length of the input exceeds the limit, the program should reject the input and ask the user to enter it again. Additionally, the input should be validated to ensure it meets the required format and does not contain any malicious data.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $LENGTH(name) > 100 { // limit the length of the input to 100 characters\n        write !, \"Input is too long. Please enter a name with 100 characters or less.\"\n    } else {\n        return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n    }\n} while '..ValidName(name)\n```\n\nIn this fix, the length of the input is checked after it is read. If the length exceeds 100 characters, an error message is displayed and the user is asked to enter the input again. The `ValidName` method should also be updated to validate the format of the input.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP Resources and CWE\n\n- [OWASP Top 10 - A1 Injection](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n\n## Note\n\nIn addition to the source code fix, it is recommended to enforce authorization using IRIS security (resources/roles) and/or application authentication. This can be done using the `$SYSTEM.Security.Check()` method in ObjectScript. This should be combined with environment safeguards and real logging/auditing to ensure the security of the application."
               },
               "properties": {
                 "cwe": [
                   {
-                    "id": "CWE-400",
-                    "url": "https://cwe.mitre.org/data/definitions/400.html"
+                    "id": "CWE-20",
+                    "url": "https://cwe.mitre.org/data/definitions/20.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-400"
+                  "CWE-20"
                 ]
               }
             },
@@ -221,6 +199,50 @@
                 "kind": "FAIL",
                 "tags": [
                   "CWE-400"
+                ]
+              }
+            },
+            {
+              "id": "42493282-59f2-325f-a414-89b76af33cf1",
+              "name": "\"READ lacks length limit and downstream validation, consider implementing #maxlen for enhanced security.\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe vulnerability in question pertains to the lack of a length limit and downstream validation when reading user input in the ObjectScript programming language. This can potentially lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply a very large input. \n\nIn the provided code snippet, the `read` command is used to get user input without any limit on the length of the input. This can potentially allow an attacker to cause a DoS attack by providing an extremely large input, causing the system to consume excessive resources trying to process the input.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to implement a length limit on the user input and perform downstream validation. This can be achieved by checking the length of the input after it is read and before it is processed. If the input exceeds the maximum allowed length, the program should reject the input and possibly alert the user that their input is too long.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Name: \", name\n    if $length(name) > 100 { // assuming 100 is the maximum allowed length\n        write !, \"Input is too long. Please enter a name up to 100 characters.\"\n    } else {\n        return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n    }\n} While '..ValidName(name)\n```\n\nIn this fix, the length of the input is checked immediately after it is read. If the length exceeds 100 characters, the program writes an error message to the user and continues to the next iteration of the loop. If the length is within the allowed limit, the program proceeds as before.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP Resources and CWE\n\n- [OWASP - Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that the above links are subject to change and may not be accessible to all users. Always ensure that the links are valid and active before adding them to the report."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-400",
+                    "url": "https://cwe.mitre.org/data/definitions/400.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-400"
+                ]
+              }
+            },
+            {
+              "id": "5ec0f754-a889-33c5-965e-aa50f1b6348e",
+              "name": "Potential Race Condition in Data Uniqueness Check with Separate Set Method: Consider Locking During Validate-Store Operation.",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe vulnerability \"Potential Race Condition in Data Uniqueness Check with Separate Set Method: Consider Locking During Validate-Store Operation\" refers to a situation where multiple processes are able to access and manipulate shared data concurrently. In the provided code snippet, the vulnerability arises when the code checks for the uniqueness of a phone number in the `^PersonI(\"Phone\", phone)` global. If two processes execute this code simultaneously with the same phone number, both could pass the uniqueness check and write the same phone number, leading to data inconsistency.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should implement a locking mechanism during the validate-store operation. This will ensure that only one process can access and manipulate the shared data at a time, preventing race conditions.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\nlock +^PersonI(\"Phone\", phone):5 if $test {\n    if $data(^PersonI(\"Phone\", phone)) {\n        write !, \"Phone number already in use\"\n        lock -^PersonI(\"Phone\", phone)\n        return 0\n    }\n    // Store the phone number here\n    lock -^PersonI(\"Phone\", phone)\n} else {\n    write !, \"Unable to acquire lock\"\n    return 0\n}\n```\n\nIn this fix, the `lock` command is used to acquire a lock on the `^PersonI(\"Phone\", phone)` global. If the lock is successfully acquired, the code checks for the uniqueness of the phone number and stores it if it's unique. After the operation, the lock is released using the `lock -` command. If the lock cannot be acquired, the code returns an error message.\n\n## Library Dependencies\n\nThe provided code snippet does not require any library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')](https://cwe.mitre.org/data/definitions/362.html)\n\nNote: Always enforce authorization using IRIS security (resources/roles) and/or application authentication as a primary solution. This should be in addition to the proposed source code fix. In the source code fix recommendation, always use ObjectScript resource/privilege check via `$SYSTEM.Security.Check()` plus environment safeguards and real logging/auditing."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-362",
+                    "url": "https://cwe.mitre.org/data/definitions/362.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-362"
                 ]
               }
             },
@@ -252,28 +274,6 @@
               }
             },
             {
-              "id": "5ec0f754-a889-33c5-965e-aa50f1b6348e",
-              "name": "Potential Race Condition in Data Uniqueness Check with Separate Set Method: Consider Locking During Validate-Store Operation.",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe vulnerability \"Potential Race Condition in Data Uniqueness Check with Separate Set Method: Consider Locking During Validate-Store Operation\" refers to a situation where multiple processes are able to access and manipulate shared data concurrently. In the provided code snippet, the vulnerability arises when the code checks for the uniqueness of a phone number in the `^PersonI(\"Phone\", phone)` global. If two processes execute this code simultaneously with the same phone number, both could pass the uniqueness check and write the same phone number, leading to data inconsistency.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should implement a locking mechanism during the validate-store operation. This will ensure that only one process can access and manipulate the shared data at a time, preventing race conditions.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\nlock +^PersonI(\"Phone\", phone):5 if $test {\n    if $data(^PersonI(\"Phone\", phone)) {\n        write !, \"Phone number already in use\"\n        lock -^PersonI(\"Phone\", phone)\n        return 0\n    }\n    // Store the phone number here\n    lock -^PersonI(\"Phone\", phone)\n} else {\n    write !, \"Unable to acquire lock\"\n    return 0\n}\n```\n\nIn this fix, the `lock` command is used to acquire a lock on the `^PersonI(\"Phone\", phone)` global. If the lock is successfully acquired, the code checks for the uniqueness of the phone number and stores it if it's unique. After the operation, the lock is released using the `lock -` command. If the lock cannot be acquired, the code returns an error message.\n\n## Library Dependencies\n\nThe provided code snippet does not require any library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [CWE-362: Concurrent Execution using Shared Resource with Improper Synchronization ('Race Condition')](https://cwe.mitre.org/data/definitions/362.html)\n\nNote: Always enforce authorization using IRIS security (resources/roles) and/or application authentication as a primary solution. This should be in addition to the proposed source code fix. In the source code fix recommendation, always use ObjectScript resource/privilege check via `$SYSTEM.Security.Check()` plus environment safeguards and real logging/auditing."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-362",
-                    "url": "https://cwe.mitre.org/data/definitions/362.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-362"
-                ]
-              }
-            },
-            {
               "id": "bf4b8989-114a-35f2-b7a6-e46ab8b15089",
               "name": "Consider using TSTART/TCOMMIT for consistency when multiple related SETs follow $INCREMENT outside transaction.",
               "helpUri": "https://www.glog.ai/",
@@ -292,50 +292,6 @@
                 "kind": "FAIL",
                 "tags": [
                   "CWE-362"
-                ]
-              }
-            },
-            {
-              "id": "b7d2889e-cb47-33e2-86e2-13bf33b98386",
-              "name": "\"Unprotected Transaction Block Vulnerability without Error Handling\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\nThe vulnerability in the provided ObjectScript code is related to the lack of error handling in the transaction block. The code uses `tstart` to start a transaction and `tcommit` to commit the transaction, but it does not handle any potential errors that might occur during the transaction. If an error occurs, the transaction will be left in an undefined state, which could lead to data corruption or loss.\n\n## Mitigation Advice\nTo mitigate this vulnerability, it is recommended to use `trollback` in an error handling routine to rollback the transaction in case of an error. This ensures that the database remains in a consistent state even if an error occurs during the transaction.\n\n## Source Code Fix Recommendation\nHere is a recommended fix for the provided code:\n\n```objectscript\ntstart\ntry {\n  set ^PersonD(id) = answers  // store the answers\n\n  set $listbuild(name, phone, intdob) = answers\n  // split name into last and first for storage in index\n  set last = $piece(name, \",\", 1), first = $piece(name, \",\", 2)\n\n  /* the next three statements store data in subscripts.\n  because of the automatic sorting of subscripts,\n  this has the effect of building 3 indices: name, phone, and DOB */\n  set ^PersonI(\"Name\", last, first, id) = \"\"  // index last and first name\n  set ^PersonI(\"Phone\", phone) = id           // index the UNIQUE phone\n  set ^PersonI(\"DOB\", intdob, id) = \"\"        // index the internal DOB\n\n  /* these statements turn the id into a \"chunk #\" and a \"position #\"\n  and set a bit into the bitmap index */\n  set chunk = (id\\64000) + 1, position = (id#64000) + 1\n  set $bit(^PersonI(\"Bitmap-ID\", chunk), position) = 1\n  tcommit\n} catch {\n  trollback\n  // handle the error, e.g., log it and/or notify the user\n}\n```\n\nThis code uses a `try`/`catch` block to handle any errors that might occur during the transaction. If an error occurs, the `catch` block is executed, which rolls back the transaction and then handles the error.\n\n## Library Dependencies\nThe provided code does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n- [CWE-391: Unchecked Error Condition](https://cwe.mitre.org/data/definitions/391.html)\n\nPlease note that enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This should be added/appended to the proposed source code fix recommendation."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-391",
-                    "url": "https://cwe.mitre.org/data/definitions/391.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-391"
-                ]
-              }
-            },
-            {
-              "id": "01879d89-0731-3f2d-8f28-222b8397169c",
-              "name": "\"Global Root Deletion: Admin-Only Access, Not for Production Use\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe vulnerability \"Global Root Deletion: Admin-Only Access, Not for Production Use\" in ObjectScript programming language refers to the situation where an application allows deletion of global root data structures without proper access control. This can lead to unauthorized data manipulation or deletion, potentially causing data loss or corruption.\n\nIn the provided code example, the `kill` command is used to delete the global root data structures `^PersonD` and `^PersonI` without any checks for user permissions or roles.\n\n```objectscript\nkill ^PersonD, ^PersonI\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is crucial to implement proper access control mechanisms. This includes checking the user's roles and permissions before allowing them to perform sensitive operations such as deleting global root data structures.\n\nIn addition to implementing access control in the source code, it is also important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This should be the primary solution for dealing with access control issues.\n\n## Source Code Fix Recommendation\n\nThe following code snippet demonstrates how to check user roles before deleting global root data structures. It uses the `$SYSTEM.Security.Check()` method to verify if the current user has the 'Admin' role.\n\n```objectscript\nif $SYSTEM.Security.Check(\"Admin\", \"%Admin_Manage\") {\n    kill ^PersonD, ^PersonI\n} else {\n    write \"Insufficient privileges to perform this operation.\",!\n    return 0\n}\n```\n\nThis code will only delete the `^PersonD` and `^PersonI` global root data structures if the current user has the 'Admin' role. If the user does not have the required role, the operation will not be performed and an error message will be displayed.\n\n## References\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that the provided links are active and accessible for anonymous users at the time of writing this report."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-285",
-                    "url": "https://cwe.mitre.org/data/definitions/285.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-285"
                 ]
               }
             },
@@ -362,12 +318,12 @@
               }
             },
             {
-              "id": "4d0c456f-a42e-311e-b69e-14311e702bb7",
-              "name": "\"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\"",
+              "id": "01879d89-0731-3f2d-8f28-222b8397169c",
+              "name": "\"Global Root Deletion: Admin-Only Access, Not for Production Use\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability \"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\" in ObjectScript programming language refers to a situation where an unauthorized user can delete an entire extent (all instances of a class) by invoking the `%KillExtent()` method. This can lead to data loss and potential disruption of service.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to implement access control checks before executing the `%KillExtent()` method. This can be done by checking the user's role and ensuring that only users with administrative privileges can execute this method. \n\n## Source Code Fix Recommendation\n\nHere is a sample code fix that checks if the current user has the 'Admin' role before executing the `%KillExtent()` method:\n\n```objectscript\nset userRole = $SYSTEM.Security.Login(\"\", \"\", \"%Admin\")\nif userRole {\n    do ##class(ObjectScript.Person).%KillExtent()\n} else {\n    write \"You do not have the necessary permissions to perform this action.\"\n    return 0\n}\n```\n\nIn this code, `$SYSTEM.Security.Login(\"\", \"\", \"%Admin\")` checks if the current user has the 'Admin' role. If the user has the 'Admin' role, the `%KillExtent()` method is executed. If not, a message is displayed to the user and the method returns 0.\n\nNote: This code fix should be used in conjunction with IRIS security (resources/roles) and/or application authentication for enforcing authorization. \n\n## Library Dependencies\n\nThe code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Access Control Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that these links are active and accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\nThe vulnerability \"Global Root Deletion: Admin-Only Access, Not for Production Use\" in ObjectScript programming language refers to the situation where an application allows deletion of global root data structures without proper access control. This can lead to unauthorized data manipulation or deletion, potentially causing data loss or corruption.\n\nIn the provided code example, the `kill` command is used to delete the global root data structures `^PersonD` and `^PersonI` without any checks for user permissions or roles.\n\n```objectscript\nkill ^PersonD, ^PersonI\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is crucial to implement proper access control mechanisms. This includes checking the user's roles and permissions before allowing them to perform sensitive operations such as deleting global root data structures.\n\nIn addition to implementing access control in the source code, it is also important to enforce authorization using IRIS security (resources/roles) and/or application authentication. This should be the primary solution for dealing with access control issues.\n\n## Source Code Fix Recommendation\n\nThe following code snippet demonstrates how to check user roles before deleting global root data structures. It uses the `$SYSTEM.Security.Check()` method to verify if the current user has the 'Admin' role.\n\n```objectscript\nif $SYSTEM.Security.Check(\"Admin\", \"%Admin_Manage\") {\n    kill ^PersonD, ^PersonI\n} else {\n    write \"Insufficient privileges to perform this operation.\",!\n    return 0\n}\n```\n\nThis code will only delete the `^PersonD` and `^PersonI` global root data structures if the current user has the 'Admin' role. If the user does not have the required role, the operation will not be performed and an error message will be displayed.\n\n## References\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that the provided links are active and accessible for anonymous users at the time of writing this report."
               },
               "properties": {
                 "cwe": [
@@ -402,6 +358,28 @@
                 "kind": "FAIL",
                 "tags": [
                   "CWE-400"
+                ]
+              }
+            },
+            {
+              "id": "4d0c456f-a42e-311e-b69e-14311e702bb7",
+              "name": "\"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe vulnerability \"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\" in ObjectScript programming language refers to a situation where an unauthorized user can delete an entire extent (all instances of a class) by invoking the `%KillExtent()` method. This can lead to data loss and potential disruption of service.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to implement access control checks before executing the `%KillExtent()` method. This can be done by checking the user's role and ensuring that only users with administrative privileges can execute this method. \n\n## Source Code Fix Recommendation\n\nHere is a sample code fix that checks if the current user has the 'Admin' role before executing the `%KillExtent()` method:\n\n```objectscript\nset userRole = $SYSTEM.Security.Login(\"\", \"\", \"%Admin\")\nif userRole {\n    do ##class(ObjectScript.Person).%KillExtent()\n} else {\n    write \"You do not have the necessary permissions to perform this action.\"\n    return 0\n}\n```\n\nIn this code, `$SYSTEM.Security.Login(\"\", \"\", \"%Admin\")` checks if the current user has the 'Admin' role. If the user has the 'Admin' role, the `%KillExtent()` method is executed. If not, a message is displayed to the user and the method returns 0.\n\nNote: This code fix should be used in conjunction with IRIS security (resources/roles) and/or application authentication for enforcing authorization. \n\n## Library Dependencies\n\nThe code example does not require any additional library dependencies to execute properly.\n\n## OWASP and CWE Links\n\n- [OWASP Access Control Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Access_Control_Cheat_Sheet.html)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that these links are active and accessible to anonymous users at the time of writing this report."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-285",
+                    "url": "https://cwe.mitre.org/data/definitions/285.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-285"
                 ]
               }
             },
@@ -450,12 +428,12 @@
               }
             },
             {
-              "id": "20132af7-7e3c-31be-bd4f-af6dee00c8e0",
+              "id": "72d80781-e079-3971-b3e2-6b71b145a3f1",
               "name": "\"Authorization Verification and Referential/Index Consistency Maintenance in Global Node Deletion\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability lies in the lack of proper authorization verification before deleting a global node in the ObjectScript programming language. The code `kill ^PersonI(\"Name\", last, first, id)` deletes a global node without checking if the user has the necessary permissions to perform this action. This could potentially allow unauthorized users to delete important data.\n\nMoreover, the code does not maintain referential/index consistency. Deleting a global node without ensuring that all references to it are also deleted can lead to inconsistencies in the data and may cause errors in the future.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is crucial to implement proper authorization checks before performing any action that modifies data. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. \n\nIn addition, it is important to maintain referential/index consistency when deleting global nodes. This can be achieved by ensuring that all references to a node are also deleted when the node itself is deleted.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```objectscript\nset resource = \"%%ResourceName%%\"\nset permission = \"W\"\nset access = $SYSTEM.Security.Check(resource, permission)\nif 'access {\n    write \"You do not have the necessary permissions to perform this action.\"\n    quit\n}\nkill ^PersonI(\"Name\", last, first, id)\n```\n\nIn this code, `resource` should be replaced with the actual resource name and `permission` should be replaced with the actual permission name. The `$SYSTEM.Security.Check()` function checks if the user has the necessary permissions to perform the action. If the user does not have the necessary permissions, the function returns 0 and the code writes an error message and quits.\n\nNote: Enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This source code fix is a secondary measure to ensure security.\n\n## References\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that the links provided are active and accessible to anonymous users."
+                "markdown": "## Description\n\nThe vulnerability lies in the lack of authorization verification before deleting a global node in the ObjectScript programming language. This could allow an unauthorized user to delete data they should not have access to, leading to data loss or corruption. Additionally, there is no referential or index consistency maintenance after the deletion, which could lead to inconsistencies in the database.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is crucial to implement proper authorization checks before performing any deletion operation. This can be done using the `$SYSTEM.Security.Check()` function in ObjectScript. Additionally, after deleting a node, it is important to maintain referential and index consistency to ensure the integrity of the database.\n\n## Source Code Fix Recommendation\n\nHere is a sample code fix that includes an authorization check before deletion and a function call to maintain consistency after deletion:\n\n```objectscript\nset resourceId = \"%%resource:id%%\"\nif '$SYSTEM.Security.Check(resourceId, \"%Delete\") {\n    write \"You do not have permission to delete this record.\",!\n    return 0\n}\nkill ^PersonD(id)\ndo maintainConsistency(id)\n```\n\nIn this code, `resourceId` should be replaced with the actual resource ID associated with the deletion operation. The `maintainConsistency` function should be implemented to handle referential and index consistency after deletion.\n\nNote: Enforcing authorization using IRIS security (resources/roles) and/or application authentication should be the primary solution. This source code fix is a secondary measure to ensure security at the code level.\n\n## Library Dependencies\n\nThe code example does not require any external library dependencies to execute properly.\n\n## OWASP and CWE Resources\n\n- [OWASP Top 10 - A5:2017-Broken Access Control](https://owasp.org/www-project-top-ten/2017/A5_2017-Broken_Access_Control)\n- [CWE-285: Improper Authorization](https://cwe.mitre.org/data/definitions/285.html)\n\nPlease note that the links provided are active and accessible to anonymous users."
               },
               "properties": {
                 "cwe": [
@@ -526,6 +504,28 @@
               }
             },
             {
+              "id": "1796d0d6-cb26-353c-bf29-b10f6a8320b8",
+              "name": "\"Unprotected Transaction Block Vulnerability with Error Handling via Try/Catch and TROLLBACK\"",
+              "helpUri": "https://www.glog.ai/",
+              "help": {
+                "text": "",
+                "markdown": "## Description\n\nThe code snippet provided is vulnerable to an \"Unprotected Transaction Block Vulnerability with Error Handling via Try/Catch and TROLLBACK\". This vulnerability occurs when a transaction block is not properly protected with error handling mechanisms. In the event of an error within the transaction block, the transaction may not be properly rolled back, leading to inconsistent data states.\n\nIn the provided code, the transaction block starts with `tstart` and ends with `tcommit`. However, there is no error handling mechanism in place to ensure that the transaction is rolled back in case of an error. This could lead to data inconsistency if an error occurs during the transaction.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use a `try/catch` block to handle any errors that may occur during the transaction. If an error is caught, the transaction should be rolled back using `trollback`. This ensures that the database remains in a consistent state even if an error occurs during the transaction.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```objectscript\ntstart\ntry {\n  set ^PersonD(id) = newanswers\n  if (newname '= currentname) {\n    // kill old name and add new name to index\n    kill ^PersonI(\"Name\", currentlast, currentfirst, id)\n    set ^PersonI(\"Name\", newlast, newfirst, id) = \"\"\n  }\n  if (newphone '= currentphone) {\n    // kill old phone and add new phone to index\n    kill ^PersonI(\"Phone\", currentphone)\n    set ^PersonI(\"Phone\", newphone) = id\n  }\n  if (newintdob '= currentintdob) {\n    // kill old dob and add new dob to index\n    kill ^PersonI(\"DOB\", currentintdob, id)\n    set ^PersonI(\"DOB\", newintdob, id) = \"\"\n  }\n  tcommit  // commit the transaction\n} catch {\n  trollback  // rollback the transaction in case of an error\n}\n```\n\nThis code now includes a `try/catch` block that wraps the transaction. If an error occurs during the transaction, the `catch` block is executed, which rolls back the transaction using `trollback`.\n\n## Library Dependencies\n\nThe provided code does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP - Error Handling](https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration)\n- [CWE-460: Improper Cleanup on Thrown Exception](https://cwe.mitre.org/data/definitions/460.html)\n\nNote: Always ensure to enforce authorization using IRIS security (resources/roles) and/or application authentication as a primary solution. This should be in addition to the proposed solution in the source code."
+              },
+              "properties": {
+                "cwe": [
+                  {
+                    "id": "CWE-460",
+                    "url": "https://cwe.mitre.org/data/definitions/460.html"
+                  }
+                ],
+                "severity": "MEDIUM",
+                "kind": "FAIL",
+                "tags": [
+                  "CWE-460"
+                ]
+              }
+            },
+            {
               "id": "8ce05a7d-fb70-3819-9558-f376f862e78e",
               "name": "\"Authorization Verification and Referential/Index Consistency Maintenance in Global Node Deletion\"",
               "helpUri": "https://www.glog.ai/",
@@ -549,28 +549,6 @@
                 "tags": [
                   "CWE-285",
                   "CWE-362"
-                ]
-              }
-            },
-            {
-              "id": "1796d0d6-cb26-353c-bf29-b10f6a8320b8",
-              "name": "\"Unprotected Transaction Block Vulnerability with Error Handling via Try/Catch and TROLLBACK\"",
-              "helpUri": "https://www.glog.ai/",
-              "help": {
-                "text": "",
-                "markdown": "## Description\n\nThe code snippet provided is vulnerable to an \"Unprotected Transaction Block Vulnerability with Error Handling via Try/Catch and TROLLBACK\". This vulnerability occurs when a transaction block is not properly protected with error handling mechanisms. In the event of an error within the transaction block, the transaction may not be properly rolled back, leading to inconsistent data states.\n\nIn the provided code, the transaction block starts with `tstart` and ends with `tcommit`. However, there is no error handling mechanism in place to ensure that the transaction is rolled back in case of an error. This could lead to data inconsistency if an error occurs during the transaction.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to use a `try/catch` block to handle any errors that may occur during the transaction. If an error is caught, the transaction should be rolled back using `trollback`. This ensures that the database remains in a consistent state even if an error occurs during the transaction.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code:\n\n```objectscript\ntstart\ntry {\n  set ^PersonD(id) = newanswers\n  if (newname '= currentname) {\n    // kill old name and add new name to index\n    kill ^PersonI(\"Name\", currentlast, currentfirst, id)\n    set ^PersonI(\"Name\", newlast, newfirst, id) = \"\"\n  }\n  if (newphone '= currentphone) {\n    // kill old phone and add new phone to index\n    kill ^PersonI(\"Phone\", currentphone)\n    set ^PersonI(\"Phone\", newphone) = id\n  }\n  if (newintdob '= currentintdob) {\n    // kill old dob and add new dob to index\n    kill ^PersonI(\"DOB\", currentintdob, id)\n    set ^PersonI(\"DOB\", newintdob, id) = \"\"\n  }\n  tcommit  // commit the transaction\n} catch {\n  trollback  // rollback the transaction in case of an error\n}\n```\n\nThis code now includes a `try/catch` block that wraps the transaction. If an error occurs during the transaction, the `catch` block is executed, which rolls back the transaction using `trollback`.\n\n## Library Dependencies\n\nThe provided code does not appear to have any library dependencies.\n\n## OWASP and CWE Links\n\n- [OWASP - Error Handling](https://owasp.org/www-project-top-ten/2017/A6_2017-Security_Misconfiguration)\n- [CWE-460: Improper Cleanup on Thrown Exception](https://cwe.mitre.org/data/definitions/460.html)\n\nNote: Always ensure to enforce authorization using IRIS security (resources/roles) and/or application authentication as a primary solution. This should be in addition to the proposed solution in the source code."
-              },
-              "properties": {
-                "cwe": [
-                  {
-                    "id": "CWE-460",
-                    "url": "https://cwe.mitre.org/data/definitions/460.html"
-                  }
-                ],
-                "severity": "MEDIUM",
-                "kind": "FAIL",
-                "tags": [
-                  "CWE-460"
                 ]
               }
             },
@@ -630,23 +608,28 @@
             },
             {
               "id": "a812b057-eba4-3975-85d0-6cb81435013b",
-              "name": "\"READ Vulnerability Due to Lack of Length Limit: Suggest Adding #maxlen for Enhanced Security\"",
+              "name": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\"",
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability is related to the lack of length limit in the `read` function in ObjectScript. This can lead to resource exhaustion or denial of service (DoS) attacks if an attacker is able to supply very large input. The issue is not a buffer overflow vulnerability, as strings in ObjectScript are dynamically managed, not read into a fixed-size C-style buffer. The concern here is about the potential for an attacker to cause a system to run out of resources by supplying excessively large input.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input validation and limit the length of the input string after it has been read. This can be done by checking the length of the input string and rejecting it if it exceeds a certain limit. \n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $length(phone) > 20 {\n        write !, \"Input too long. Please enter a phone number of 20 characters or less.\"\n    }\n} while '..ValidPhone(.phone)\n```\n\nIn this fix, the length of the input string `phone` is checked after it is read. If the length exceeds 20 characters, an error message is displayed and the loop continues to prompt for input until a valid phone number of appropriate length is entered.\n\n## Library Dependencies\n\nThe code example does not appear to have any library dependencies.\n\n## OWASP and CWE Resources\n\n- [OWASP - Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n\nPlease note that the links provided are active and accessible to anonymous users at the time of writing this report."
+                "markdown": "## Description\n\nThe vulnerability is related to the unbounded `READ` operation in the ObjectScript programming language. The `READ` operation lacks a length limit, which means that an attacker can supply very large input, potentially leading to resource exhaustion or denial of service (DoS) due to excessive memory or CPU usage. This is not a buffer overflow vulnerability, as strings in ObjectScript are dynamically managed, not read into a fixed-size buffer. \n\nThe `READ` operation in the provided code snippet does not have a length limit:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n} while '..ValidPhone(.phone)\n```\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to enforce input length limits and validation after the `READ` operation. This can be done by checking the length of the input string and validating it before processing. \n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the provided code snippet:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $LENGTH(phone) > 10 {\n        write \"Phone number is too long. Please enter a valid phone number.\"\n    } elseif '..ValidPhone(.phone) {\n        quit\n    }\n} while 1\n```\n\nIn this fix, the length of the input string `phone` is checked after the `READ` operation. If the length is more than 10, a warning message is displayed and the loop continues. If the phone number is valid, the loop is exited.\n\nNote: This fix assumes that a valid phone number is no more than 10 characters long. Adjust this value as necessary for your specific requirements.\n\n## Library Dependencies\n\nThe provided code snippet does not appear to have any library dependencies.\n\n## OWASP Resources\n\n- [OWASP - Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)"
               },
               "properties": {
                 "cwe": [
                   {
                     "id": "CWE-400",
                     "url": "https://cwe.mitre.org/data/definitions/400.html"
+                  },
+                  {
+                    "id": "CWE-20",
+                    "url": "https://cwe.mitre.org/data/definitions/20.html"
                   }
                 ],
                 "severity": "MEDIUM",
                 "kind": "FAIL",
                 "tags": [
-                  "CWE-400"
+                  "CWE-400",
+                  "CWE-20"
                 ]
               }
             },
@@ -656,7 +639,7 @@
               "helpUri": "https://www.glog.ai/",
               "help": {
                 "text": "",
-                "markdown": "## Description\n\nThe vulnerability in question is related to the `read` function in the ObjectScript programming language. The `read` function is used to get user input, but in this case, it does not have a length limit set, which means that an attacker could potentially input a very large string, causing resource exhaustion or denial of service (DoS). Additionally, the input lacks downstream validation, which means that the input is not checked for validity before it is used in the program. This could lead to unexpected behavior or even security issues if the input is used in a security-sensitive context.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, you should add a length limit to the `read` function and add downstream validation to check the input for validity before it is used. This will prevent an attacker from causing a DoS attack by inputting a very large string and will ensure that the input is valid before it is used.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the vulnerability:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $length(phone) > 10 {\n        write !, \"Phone number is too long. Please enter a valid phone number.\"\n    } else {\n        if '..ValidPhone(.phone) {\n            quit\n        } else {\n            write !, \"Invalid phone number. Please try again.\"\n        }\n    }\n} While 1\n```\n\nIn this fix, the `read` function is still used to get the user input, but now there is a check to see if the length of the input is greater than 10. If it is, the user is informed that the phone number is too long and is asked to enter a valid phone number. If the length of the input is not greater than 10, the input is checked for validity using the `ValidPhone` function. If the input is valid, the loop is exited, otherwise, the user is informed that the phone number is invalid and is asked to try again.\n\n## Library Dependencies\n\nThe code example does not require any library dependencies to execute properly.\n\n## OWASP Resources\n\n- [OWASP Top 10 2017 Category A3: Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n- [OWASP Cheat Sheet Series: Input Validation Cheat Sheet](https://cheatsheetseries.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)"
+                "markdown": "## Description\n\nThe vulnerability in question is related to the `read` function in the ObjectScript programming language. The `read` function is used to get user input, but in this case, it does not have a length limit set. This means that an attacker could potentially input a very large string, causing resource exhaustion and a denial of service (DoS) attack. Additionally, the input lacks downstream validation, which could lead to other potential security issues.\n\n## Mitigation Advice\n\nTo mitigate this vulnerability, it is recommended to add a length limit to the `read` function and to add downstream validation to the input. This will prevent an attacker from inputting a very large string and causing a DoS attack, and it will also ensure that the input is valid and safe to use in the program.\n\n## Source Code Fix Recommendation\n\nHere is a recommended fix for the code:\n\n```objectscript\ndo {\n    read !, \"Phone (617): \", phone\n    if $length(phone) > 15 {\n        write !, \"Phone number is too long. Please enter a valid phone number.\"\n    } else {\n        if '..ValidPhone(.phone) {\n            break\n        } else {\n            write !, \"Invalid phone number. Please try again.\"\n        }\n    }\n} while 1\n```\n\nIn this fix, the `read` function is still used to get the user input, but now there is a check to see if the length of the input is greater than 15 characters. If it is, the user is informed that the phone number is too long and they are asked to enter a valid phone number. If the length of the input is not greater than 15 characters, the input is then validated with the `ValidPhone` function. If the input is valid, the loop breaks and the program continues. If the input is not valid, the user is informed that the phone number is invalid and they are asked to try again.\n\n## Library Dependencies\n\nThe code example does not appear to have any library dependencies.\n\n## OWASP Resources\n\n- [OWASP Top 10 - A1 Injection](https://owasp.org/www-project-top-ten/2017/A1_2017-Injection)\n- [OWASP Top 10 - A3 Sensitive Data Exposure](https://owasp.org/www-project-top-ten/2017/A3_2017-Sensitive_Data_Exposure)\n\n## Common Weakness Enumeration (CWE)\n\n- [CWE-20: Improper Input Validation](https://cwe.mitre.org/data/definitions/20.html)\n- [CWE-400: Uncontrolled Resource Consumption](https://cwe.mitre.org/data/definitions/400.html)"
               },
               "properties": {
                 "cwe": [
@@ -689,7 +672,7 @@
       "language": "en-US",
       "results": [
         {
-          "ruleId": "cafcafb1-54e4-3005-a9fe-3fd052454113",
+          "ruleId": "29b13a5d-59a3-3bdc-bf3b-705753a4df6b",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -703,23 +686,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 8,
+                  "startLine": 6,
                   "startColumn": 1,
-                  "endLine": 8,
-                  "endColumn": 27,
+                  "endLine": 6,
+                  "endColumn": 26,
                   "snippet": {
-                    "text": "  read !, \"Phone: \", phone"
+                    "text": "  read !, \"Name: \" , name"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "e826f109c4b45f10eee9761c945719176bc6b4aa43aa8b528eecb0f23972e1e9",
-            "glog-pfp-ruleFileCode/v1": "4d988c25ff43dbdbaf7a05cd1696f869fd7cba05aa4552c4982d3b4e94de80dd"
+            "glog-pfp-ruleFileLineCode/v1": "1eb0a19967bdf3a84b461d73a43ca1d67a24b112574176098cd2c9bc56d8ec1f",
+            "glog-pfp-ruleFileCode/v1": "9a56055f23c0da538635528a49f93c4c2289ddec20bf6ba59bf5a8760bbe5f4e"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "4d988c25ff43dbdbaf7a05cd1696f869fd7cba05aa4552c4982d3b4e94de80dd"
+            "glog-fp-ruleFileCode/v1": "9a56055f23c0da538635528a49f93c4c2289ddec20bf6ba59bf5a8760bbe5f4e"
           },
           "properties": {}
         },
@@ -759,41 +742,6 @@
           "properties": {}
         },
         {
-          "ruleId": "29b13a5d-59a3-3bdc-bf3b-705753a4df6b",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "Unrestricted Read Length or Lack of Input Validation Vulnerability"
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry1.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 6,
-                  "startColumn": 1,
-                  "endLine": 6,
-                  "endColumn": 26,
-                  "snippet": {
-                    "text": "  read !, \"Name: \" , name"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "1eb0a19967bdf3a84b461d73a43ca1d67a24b112574176098cd2c9bc56d8ec1f",
-            "glog-pfp-ruleFileCode/v1": "9a56055f23c0da538635528a49f93c4c2289ddec20bf6ba59bf5a8760bbe5f4e"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "9a56055f23c0da538635528a49f93c4c2289ddec20bf6ba59bf5a8760bbe5f4e"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "435010c9-558e-3363-b9d6-0240e98604bb",
           "kind": "fail",
           "level": "warning",
@@ -825,6 +773,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "c106970a3015e1768d0c46da207f0b746f250550d6e18743983cea2298ec866b"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "cafcafb1-54e4-3005-a9fe-3fd052454113",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "Unrestricted Read Length or Lack of Input Validation Vulnerability"
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/DataEntry1.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 8,
+                  "startColumn": 1,
+                  "endLine": 8,
+                  "endColumn": 27,
+                  "snippet": {
+                    "text": "  read !, \"Phone: \", phone"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "e826f109c4b45f10eee9761c945719176bc6b4aa43aa8b528eecb0f23972e1e9",
+            "glog-pfp-ruleFileCode/v1": "4d988c25ff43dbdbaf7a05cd1696f869fd7cba05aa4552c4982d3b4e94de80dd"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "4d988c25ff43dbdbaf7a05cd1696f869fd7cba05aa4552c4982d3b4e94de80dd"
           },
           "properties": {}
         },
@@ -934,41 +917,6 @@
           "properties": {}
         },
         {
-          "ruleId": "42493282-59f2-325f-a414-89b76af33cf1",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"READ lacks length limit and downstream validation, consider implementing #maxlen for enhanced security.\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry4.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 16,
-                  "startColumn": 3,
-                  "endLine": 19,
-                  "endColumn": 13,
-                  "snippet": {
-                    "text": "  do {\n    read !, \"Name: \", name\n    return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n  } While '..ValidName(name)"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "a26a27f1f7759a90be695423e71456f39c405514740fb649ed46101e1f4cce8a",
-            "glog-pfp-ruleFileCode/v1": "b7eef19b46d93b7571a649686a9292b219f18d52d1f86e4406b849c6e49c91f1"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "b7eef19b46d93b7571a649686a9292b219f18d52d1f86e4406b849c6e49c91f1"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "3ed646f7-709c-3f10-a7ac-befa9871452f",
           "kind": "fail",
           "level": "warning",
@@ -1004,11 +952,11 @@
           "properties": {}
         },
         {
-          "ruleId": "499a80f3-9d51-308a-a8b7-d54e1e77d26a",
+          "ruleId": "42493282-59f2-325f-a414-89b76af33cf1",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\""
+            "text": "\"READ lacks length limit and downstream validation, consider implementing #maxlen for enhanced security.\""
           },
           "locations": [
             {
@@ -1018,23 +966,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 25,
+                  "startLine": 16,
                   "startColumn": 3,
-                  "endLine": 27,
+                  "endLine": 19,
                   "endColumn": 13,
                   "snippet": {
-                    "text": "  do {\n    read !, \"DOB: \", dob\n  } While '..ValidDOB(dob, .intdob)"
+                    "text": "  do {\n    read !, \"Name: \", name\n    return:(name = \"\") 0  // user entered nothing so return FALSE, exit loop AND method\n  } While '..ValidName(name)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "12d7de5090d32ba81c31cd35728ebdb7f7dae490f24ead4f33f52990efc9ff5f",
-            "glog-pfp-ruleFileCode/v1": "eace1c7a8f7c366eb78748ab636f9891fd378660c60dd6167f5e8b1c77ed71cd"
+            "glog-pfp-ruleFileLineCode/v1": "a26a27f1f7759a90be695423e71456f39c405514740fb649ed46101e1f4cce8a",
+            "glog-pfp-ruleFileCode/v1": "b7eef19b46d93b7571a649686a9292b219f18d52d1f86e4406b849c6e49c91f1"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "eace1c7a8f7c366eb78748ab636f9891fd378660c60dd6167f5e8b1c77ed71cd"
+            "glog-fp-ruleFileCode/v1": "b7eef19b46d93b7571a649686a9292b219f18d52d1f86e4406b849c6e49c91f1"
           },
           "properties": {}
         },
@@ -1070,6 +1018,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "3380a87a09c4db7b2f36452d037308798a281171de8ab560de6475418f15d5dd"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "499a80f3-9d51-308a-a8b7-d54e1e77d26a",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/DataEntry4.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 25,
+                  "startColumn": 3,
+                  "endLine": 27,
+                  "endColumn": 13,
+                  "snippet": {
+                    "text": "  do {\n    read !, \"DOB: \", dob\n  } While '..ValidDOB(dob, .intdob)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "12d7de5090d32ba81c31cd35728ebdb7f7dae490f24ead4f33f52990efc9ff5f",
+            "glog-pfp-ruleFileCode/v1": "eace1c7a8f7c366eb78748ab636f9891fd378660c60dd6167f5e8b1c77ed71cd"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "eace1c7a8f7c366eb78748ab636f9891fd378660c60dd6167f5e8b1c77ed71cd"
           },
           "properties": {}
         },
@@ -1144,41 +1127,6 @@
           "properties": {}
         },
         {
-          "ruleId": "01879d89-0731-3f2d-8f28-222b8397169c",
-          "kind": "fail",
-          "level": "warning",
-          "message": {
-            "text": "\"Global Root Deletion: Admin-Only Access, Not for Production Use\""
-          },
-          "locations": [
-            {
-              "physicalLocation": {
-                "artifactLocation": {
-                  "uri": "src/ObjectScript/DataEntry4.cls",
-                  "uriBaseId": "%SRCROOT%"
-                },
-                "region": {
-                  "startLine": 137,
-                  "startColumn": 1,
-                  "endLine": 137,
-                  "endColumn": 26,
-                  "snippet": {
-                    "text": "  kill ^PersonD, ^PersonI"
-                  }
-                }
-              }
-            }
-          ],
-          "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "f7acc2d8fb698b79dbe5f1419cfb25ea127a904bf8965d4259905f2cd4f7f53e",
-            "glog-pfp-ruleFileCode/v1": "71bf54ba2a9144e1b91e28200b017cdf95ff6c26b1370006bc6cd7ee99d51ff9"
-          },
-          "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "71bf54ba2a9144e1b91e28200b017cdf95ff6c26b1370006bc6cd7ee99d51ff9"
-          },
-          "properties": {}
-        },
-        {
           "ruleId": "472c15e6-ffcc-3a94-8295-65e61fb52e2d",
           "kind": "fail",
           "level": "warning",
@@ -1214,11 +1162,11 @@
           "properties": {}
         },
         {
-          "ruleId": "4d0c456f-a42e-311e-b69e-14311e702bb7",
+          "ruleId": "01879d89-0731-3f2d-8f28-222b8397169c",
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\""
+            "text": "\"Global Root Deletion: Admin-Only Access, Not for Production Use\""
           },
           "locations": [
             {
@@ -1228,23 +1176,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 138,
-                  "startColumn": 35,
-                  "endLine": 138,
-                  "endColumn": 47,
+                  "startLine": 137,
+                  "startColumn": 1,
+                  "endLine": 137,
+                  "endColumn": 26,
                   "snippet": {
-                    "text": "  do ##class(ObjectScript.Person).%KillExtent()"
+                    "text": "  kill ^PersonD, ^PersonI"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "85887d486731a3fbc39cb1daf9906e7d01cc348c959a812be3eef71a9837b677",
-            "glog-pfp-ruleFileCode/v1": "4490d8d8e00d0a76642c1ef08ef845f36dc24664bbc7b8c452933a22ce1968a3"
+            "glog-pfp-ruleFileLineCode/v1": "f7acc2d8fb698b79dbe5f1419cfb25ea127a904bf8965d4259905f2cd4f7f53e",
+            "glog-pfp-ruleFileCode/v1": "71bf54ba2a9144e1b91e28200b017cdf95ff6c26b1370006bc6cd7ee99d51ff9"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "4490d8d8e00d0a76642c1ef08ef845f36dc24664bbc7b8c452933a22ce1968a3"
+            "glog-fp-ruleFileCode/v1": "71bf54ba2a9144e1b91e28200b017cdf95ff6c26b1370006bc6cd7ee99d51ff9"
           },
           "properties": {}
         },
@@ -1280,6 +1228,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "50697fdb20a31b2a0f51c7ac791d19a58529da92d4791f879ba2e621eaf0936d"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "4d0c456f-a42e-311e-b69e-14311e702bb7",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Admin-Only Restriction Required for Detected Extent Deletion Vulnerability\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/DataEntry4.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 138,
+                  "startColumn": 35,
+                  "endLine": 138,
+                  "endColumn": 47,
+                  "snippet": {
+                    "text": "  do ##class(ObjectScript.Person).%KillExtent()"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "85887d486731a3fbc39cb1daf9906e7d01cc348c959a812be3eef71a9837b677",
+            "glog-pfp-ruleFileCode/v1": "4490d8d8e00d0a76642c1ef08ef845f36dc24664bbc7b8c452933a22ce1968a3"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "4490d8d8e00d0a76642c1ef08ef845f36dc24664bbc7b8c452933a22ce1968a3"
           },
           "properties": {}
         },
@@ -1389,7 +1372,7 @@
           "properties": {}
         },
         {
-          "ruleId": "80e5bcc0-bd1f-325f-881b-f661c4d44193",
+          "ruleId": "20132af7-7e3c-31be-bd4f-af6dee00c8e0",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1403,23 +1386,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 229,
+                  "startLine": 228,
                   "startColumn": 1,
-                  "endLine": 229,
+                  "endLine": 228,
                   "endColumn": 17,
                   "snippet": {
-                    "text": "  kill ^PersonI(\"Phone\", phone)"
+                    "text": "  kill ^PersonI(\"Name\", last, first, id)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "f6bce1cae137605db71abc33ba5171de8773f03c266f9ae5b8b2571cc8f993c6",
-            "glog-pfp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
+            "glog-pfp-ruleFileLineCode/v1": "39ccfa5bfee025a32458dd23f11fa0fbde5a5e84975962b13a6dc5c3c7935ff7",
+            "glog-pfp-ruleFileCode/v1": "9cc9bcc620932ba42597e1a6210b9aa47ad40853372fda4cf8a57843ca87c6d3"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
+            "glog-fp-ruleFileCode/v1": "9cc9bcc620932ba42597e1a6210b9aa47ad40853372fda4cf8a57843ca87c6d3"
           },
           "properties": {}
         },
@@ -1459,7 +1442,7 @@
           "properties": {}
         },
         {
-          "ruleId": "8ce05a7d-fb70-3819-9558-f376f862e78e",
+          "ruleId": "80e5bcc0-bd1f-325f-881b-f661c4d44193",
           "kind": "fail",
           "level": "warning",
           "message": {
@@ -1473,23 +1456,23 @@
                   "uriBaseId": "%SRCROOT%"
                 },
                 "region": {
-                  "startLine": 314,
+                  "startLine": 229,
                   "startColumn": 1,
-                  "endLine": 314,
-                  "endColumn": 19,
+                  "endLine": 229,
+                  "endColumn": 17,
                   "snippet": {
-                    "text": "    kill ^PersonI(\"Name\", currentlast, currentfirst, id)"
+                    "text": "  kill ^PersonI(\"Phone\", phone)"
                   }
                 }
               }
             }
           ],
           "partialFingerprints": {
-            "glog-pfp-ruleFileLineCode/v1": "549252a2a90c1958ff803d2a3c54e0e499f769457676cd390c226e4576cd765e",
-            "glog-pfp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
+            "glog-pfp-ruleFileLineCode/v1": "f6bce1cae137605db71abc33ba5171de8773f03c266f9ae5b8b2571cc8f993c6",
+            "glog-pfp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
           },
           "fingerprints": {
-            "glog-fp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
+            "glog-fp-ruleFileCode/v1": "8c64b374d9bba1d82fb6a3e95720ba33c7ba16252397344301bf24bc84a6d6e1"
           },
           "properties": {}
         },
@@ -1525,6 +1508,41 @@
           },
           "fingerprints": {
             "glog-fp-ruleFileCode/v1": "7d97a0da241969d8b6bc1b8ef7d29dc93357400c5eebe15494f8c5338fd2ade8"
+          },
+          "properties": {}
+        },
+        {
+          "ruleId": "8ce05a7d-fb70-3819-9558-f376f862e78e",
+          "kind": "fail",
+          "level": "warning",
+          "message": {
+            "text": "\"Authorization Verification and Referential/Index Consistency Maintenance in Global Node Deletion\""
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "src/ObjectScript/Lookup3.cls",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 314,
+                  "startColumn": 1,
+                  "endLine": 314,
+                  "endColumn": 19,
+                  "snippet": {
+                    "text": "    kill ^PersonI(\"Name\", currentlast, currentfirst, id)"
+                  }
+                }
+              }
+            }
+          ],
+          "partialFingerprints": {
+            "glog-pfp-ruleFileLineCode/v1": "549252a2a90c1958ff803d2a3c54e0e499f769457676cd390c226e4576cd765e",
+            "glog-pfp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
+          },
+          "fingerprints": {
+            "glog-fp-ruleFileCode/v1": "c2e3657171377b6ae29f818e99747196ae676817b036847bda59fb29f8bc456b"
           },
           "properties": {}
         },
@@ -1603,7 +1621,7 @@
           "kind": "fail",
           "level": "warning",
           "message": {
-            "text": "\"READ Vulnerability Due to Lack of Length Limit: Suggest Adding #maxlen for Enhanced Security\""
+            "text": "\"READ Lacks Length Limit and Requires Downstream Validation: Consider #maxlen for Enhanced Security\""
           },
           "locations": [
             {
